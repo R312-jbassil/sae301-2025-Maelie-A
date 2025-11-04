@@ -10,6 +10,7 @@ const models = [
   { name: 'Sport Performance', category: 'sport', price: '329€', slug: 'sport-performance' },
   { name: 'Carrée Minimaliste', category: 'business', price: '289€', slug: 'carree-minimaliste' },
   { name: 'Cat-Eye Élégante', category: 'féminin', price: '309€', slug: 'cat-eye-elegante' },
+  { name: 'Créez la vôtre', category: 'personnalisable', price: 'Sur mesure', slug: 'personnaliser', isCustom: true },
 ];
 ---
 
@@ -90,6 +91,7 @@ const models = [
               category={model.category} 
               price={model.price}
               slug={model.slug}
+              isCustom={model.isCustom}
             />
           ))}
         </div>

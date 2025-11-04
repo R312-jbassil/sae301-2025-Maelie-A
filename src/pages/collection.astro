@@ -1,0 +1,281 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import CardModel from '../components/CardModel.astro';
+
+const models = [
+  { name: 'Aviateur Classique', category: 'business', price: '289€', slug: 'aviateur-classique' },
+  { name: 'Wayfarer Moderne', category: 'urbain', price: '249€', slug: 'wayfarer-moderne' },
+  { name: 'Ronde Vintage', category: 'féminin', price: '279€', slug: 'ronde-vintage' },
+  { name: 'Sport Performance', category: 'sport', price: '329€', slug: 'sport-performance' },
+  { name: 'Carrée Minimaliste', category: 'business', price: '289€', slug: 'carree-minimaliste' },
+  { name: 'Cat-Eye Élégante', category: 'féminin', price: '309€', slug: 'cat-eye-elegante' },
+  { name: 'Créez la vôtre', category: 'personnalisable', price: 'Sur mesure', slug: 'personnaliser', isCustom: true },
+];
+
+const categories = ['Tous', 'Business', 'Féminin', 'Sport', 'Urbain', 'Personnalisable'];
+---
+
+<Layout title="Collection TaVue - Lunettes sur mesure">
+  <Header />
+  
+  <main class="pt-20">
+    <!-- Hero Section Collection -->
+    <section class="relative py-20 px-6 lg:px-10 bg-gradient-to-b from-zinc-900/50 to-black">
+      <div class="container mx-auto text-center space-y-6">
+        <span class="inline-block px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full text-yellow-500 text-sm uppercase tracking-wider">
+          Collection 2025
+        </span>
+        
+        <h1 class="text-5xl lg:text-6xl xl:text-7xl font-light text-white">
+          Notre <span class="text-yellow-500 font-serif italic">Collection</span>
+        </h1>
+        
+        <p class="text-gray-300 text-lg lg:text-xl max-w-2xl mx-auto">
+          Six modèles iconiques, pensés pour exprimer votre personnalité. 
+          Chaque paire est unique, fabriquée à la main à Paris.
+        </p>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto pt-12">
+          <div class="space-y-2">
+            <p class="text-4xl font-serif text-yellow-500">6</p>
+            <p class="text-gray-400 text-sm uppercase tracking-wide">Modèles</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-4xl font-serif text-yellow-500">∞</p>
+            <p class="text-gray-400 text-sm uppercase tracking-wide">Combinaisons</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-4xl font-serif text-yellow-500">100%</p>
+            <p class="text-gray-400 text-sm uppercase tracking-wide">Français</p>
+          </div>
+          <div class="space-y-2">
+            <p class="text-4xl font-serif text-yellow-500">★</p>
+            <p class="text-gray-400 text-sm uppercase tracking-wide">Premium</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filtres et Tri -->
+    <section class="sticky top-20 z-40 bg-black/95 backdrop-blur-sm border-y border-white/10 py-6 px-6 lg:px-10">
+      <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row gap-6 items-center justify-between">
+          
+          <!-- Filtres par catégorie -->
+          <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+            {categories.map((cat) => (
+              <button 
+                class={`filter-btn px-5 py-2 rounded-lg text-sm font-medium transition-all uppercase tracking-wide ${
+                  cat === 'Tous' 
+                    ? 'bg-yellow-500 text-black' 
+                    : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-white/10'
+                }`}
+                data-category={cat.toLowerCase()}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          <!-- Tri -->
+          <div class="flex items-center gap-4">
+            <span class="text-sm text-gray-400 uppercase tracking-wide">Trier par :</span>
+            <select class="select select-sm bg-white/5 border-white/10 text-white focus:border-yellow-500">
+              <option>Popularité</option>
+              <option>Prix croissant</option>
+              <option>Prix décroissant</option>
+              <option>Nouveautés</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grille de produits -->
+    <section class="py-20 px-6 lg:px-10">
+      <div class="container mx-auto">
+        <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {models.map((model) => (
+            <CardModel 
+              name={model.name} 
+              category={model.category} 
+              price={model.price}
+              slug={model.slug}
+            />
+          ))}
+        </div>
+
+        <!-- Message si aucun résultat -->
+        <div id="no-results" class="hidden text-center py-20">
+          <div class="max-w-md mx-auto space-y-4">
+            <svg class="w-20 h-20 mx-auto text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h3 class="text-2xl font-light text-gray-400">Aucun modèle trouvé</h3>
+            <p class="text-gray-500">Essayez de modifier vos filtres</p>
+            <button class="btn btn-outline btn-warning btn-sm mt-4" onclick="resetFilters()">
+              Réinitialiser les filtres
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Avantages -->
+    <section class="py-20 px-6 lg:px-10 bg-zinc-900/30">
+      <div class="container mx-auto max-w-7xl">
+        <h2 class="text-3xl lg:text-4xl font-light text-yellow-500 font-serif text-center mb-16">
+          Pourquoi choisir TaVue ?
+        </h2>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="text-center space-y-4 p-8 bg-black/50 border border-white/10 rounded-xl hover:border-yellow-500/50 transition-all group">
+            <div class="w-20 h-20 mx-auto rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-lg">Garantie à vie</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Nous garantissons chaque paire contre tout défaut de fabrication
+            </p>
+          </div>
+
+          <div class="text-center space-y-4 p-8 bg-black/50 border border-white/10 rounded-xl hover:border-yellow-500/50 transition-all group">
+            <div class="w-20 h-20 mx-auto rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-lg">Made in Paris</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Conception et assemblage 100% français dans nos ateliers parisiens
+            </p>
+          </div>
+
+          <div class="text-center space-y-4 p-8 bg-black/50 border border-white/10 rounded-xl hover:border-yellow-500/50 transition-all group">
+            <div class="w-20 h-20 mx-auto rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-lg">Personnalisable</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Infinies combinaisons de couleurs, matériaux et finitions
+            </p>
+          </div>
+
+          <div class="text-center space-y-4 p-8 bg-black/50 border border-white/10 rounded-xl hover:border-yellow-500/50 transition-all group">
+            <div class="w-20 h-20 mx-auto rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-lg">Livraison Premium</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Emballage soigné, livraison en 2-3 jours avec suivi
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-6 lg:px-10">
+      <div class="container mx-auto">
+        <div class="bg-gradient-to-r from-yellow-500/10 to-amber-500/10 border border-yellow-500/30 rounded-2xl p-12 text-center space-y-6">
+          <h2 class="text-3xl lg:text-4xl font-light text-white">
+            Besoin d'aide pour <span class="text-yellow-500 font-serif italic">choisir</span> ?
+          </h2>
+          <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+            Nos experts sont disponibles pour vous conseiller et vous accompagner dans la création de votre monture parfaite.
+          </p>
+          <div class="flex flex-wrap gap-4 justify-center pt-4">
+            <a href="/contact" class="btn btn-warning bg-yellow-500 hover:bg-yellow-400 text-black border-none">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              Contactez-nous
+            </a>
+            <a href="/personnaliser" class="btn btn-outline btn-warning">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+              </svg>
+              Créer ma monture
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 lg:px-10">
+    <div class="container mx-auto text-center space-y-6">
+      <nav class="flex justify-center gap-6 text-sm text-gray-400">
+        <a href="/mentions-legales" class="hover:text-yellow-500 transition-colors">Mentions légales</a>
+        <span class="text-white/20">|</span>
+        <a href="/cgv" class="hover:text-yellow-500 transition-colors">CGV</a>
+        <span class="text-white/20">|</span>
+        <a href="/contact" class="hover:text-yellow-500 transition-colors">Contact</a>
+      </nav>
+      <p class="text-yellow-500 font-serif text-sm">
+        Fabrication française – Artisanat d'excellence
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Système de filtrage
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const productsGrid = document.getElementById('products-grid');
+    const noResults = document.getElementById('no-results');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Mise à jour des styles de boutons
+        filterButtons.forEach(btn => {
+          btn.classList.remove('bg-yellow-500', 'text-black');
+          btn.classList.add('bg-white/5', 'text-gray-400', 'border', 'border-white/10');
+        });
+        button.classList.remove('bg-white/5', 'text-gray-400', 'border', 'border-white/10');
+        button.classList.add('bg-yellow-500', 'text-black');
+
+        // Filtrage
+        const category = button.dataset.category;
+        const cards = productsGrid.querySelectorAll('a');
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const cardCategory = card.querySelector('.text-gray-400')?.textContent?.toLowerCase();
+          
+          if (category === 'tous' || cardCategory === category) {
+            card.style.display = 'block';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Afficher/masquer le message "aucun résultat"
+        if (visibleCount === 0) {
+          productsGrid.style.display = 'none';
+          noResults.classList.remove('hidden');
+        } else {
+          productsGrid.style.display = 'grid';
+          noResults.classList.add('hidden');
+        }
+      });
+    });
+
+    // Fonction pour réinitialiser les filtres
+    (window as any).resetFilters = () => {
+      const tousButton = document.querySelector('[data-category="tous"]') as HTMLElement;
+      if (tousButton) {
+        tousButton.click();
+      }
+    };
+  </script>
+</Layout>
