@@ -1,0 +1,315 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout title="À propos - TaVue | Notre histoire">
+  <Header />
+  
+  <main class="pt-20">
+    <!-- Hero Section -->
+    <section class="relative min-h-[60vh] flex items-center px-6 lg:px-10 bg-gradient-to-b from-zinc-900/50 to-black">
+      <div class="container mx-auto text-center space-y-8">
+        <span class="inline-block px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full text-yellow-500 text-sm uppercase tracking-wider">
+          Notre histoire
+        </span>
+        
+        <h1 class="text-5xl lg:text-7xl font-light text-white">
+          L'art de la <span class="text-yellow-500 font-serif italic">lunetterie</span>
+        </h1>
+        
+        <p class="text-gray-300 text-xl lg:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
+          Depuis 2020, nous redéfinissons l'excellence artisanale française dans la création de lunettes sur mesure.
+        </p>
+      </div>
+    </section>
+
+    <!-- Notre Mission -->
+    <section class="py-20 px-6 lg:px-10">
+      <div class="container mx-auto">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div class="space-y-6">
+            <h2 class="text-4xl lg:text-5xl font-light text-yellow-500 font-serif">
+              Notre Mission
+            </h2>
+            <p class="text-gray-300 text-lg leading-relaxed">
+              Chez <span class="text-yellow-500 font-serif">TaVue</span>, nous croyons que les lunettes sont bien plus qu'un accessoire. 
+              Elles sont l'expression de votre personnalité, de votre style unique.
+            </p>
+            <p class="text-gray-300 text-lg leading-relaxed">
+              C'est pourquoi nous avons créé une expérience de personnalisation complète, 
+              où chaque détail compte. Du choix de la monture aux finitions, 
+              vous êtes le créateur de votre chef-d'œuvre.
+            </p>
+            <div class="pt-6 space-y-4">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-white font-serif text-lg mb-2">Excellence artisanale</h3>
+                  <p class="text-gray-400">Chaque paire est fabriquée à la main par nos maîtres artisans français</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-white font-serif text-lg mb-2">Passion du détail</h3>
+                  <p class="text-gray-400">Nous sélectionnons les meilleurs matériaux pour votre confort et durabilité</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 rounded-full bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-white font-serif text-lg mb-2">Innovation continue</h3>
+                  <p class="text-gray-400">Technologies modernes au service de la tradition artisanale</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="relative">
+            <div class="aspect-[4/5] rounded-2xl overflow-hidden border border-white/10">
+              <img 
+                src="/images/lunettes.png" 
+                alt="Atelier TaVue" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="absolute -bottom-6 -left-6 bg-yellow-500 text-black p-6 rounded-xl shadow-2xl max-w-xs">
+              <p class="text-4xl font-serif mb-2">5000+</p>
+              <p class="text-sm font-medium uppercase tracking-wide">Clients satisfaits</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notre Atelier -->
+    <section class="py-20 px-6 lg:px-10 bg-zinc-900/30">
+      <div class="container mx-auto">
+        <div class="text-center mb-16 space-y-4">
+          <h2 class="text-4xl lg:text-5xl font-light text-yellow-500 font-serif">
+            Notre Atelier Parisien
+          </h2>
+          <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+            Au cœur de Paris, nos artisans perpétuent un savoir-faire d'exception
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="space-y-4">
+            <div class="aspect-square rounded-xl overflow-hidden border border-white/10">
+              <img 
+                src="/images/lunettes.png" 
+                alt="Artisan au travail" 
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+            <h3 class="text-yellow-500 font-serif text-xl">Fabrication artisanale</h3>
+            <p class="text-gray-400">
+              Chaque monture est façonnée avec précision et amour du détail par nos maîtres artisans.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <div class="aspect-square rounded-xl overflow-hidden border border-white/10">
+              <img 
+                src="/images/lunettes.png" 
+                alt="Matériaux premium" 
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+            <h3 class="text-yellow-500 font-serif text-xl">Matériaux d'exception</h3>
+            <p class="text-gray-400">
+              Acétate italien, titane japonais, bois précieux... Nous sélectionnons le meilleur.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <div class="aspect-square rounded-xl overflow-hidden border border-white/10">
+              <img 
+                src="/images/lunettes.png" 
+                alt="Contrôle qualité" 
+                class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+            <h3 class="text-yellow-500 font-serif text-xl">Contrôle qualité rigoureux</h3>
+            <p class="text-gray-400">
+              Chaque paire est inspectée à plusieurs reprises avant de vous parvenir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notre Histoire en chiffres -->
+    <section class="py-20 px-6 lg:px-10">
+      <div class="container mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl lg:text-5xl font-light text-yellow-500 font-serif mb-4">
+            TaVue en chiffres
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div class="text-center p-8 bg-zinc-900/50 border border-white/10 rounded-xl">
+            <p class="text-5xl lg:text-6xl font-serif text-yellow-500 mb-4">2020</p>
+            <p class="text-gray-400 uppercase tracking-wide text-sm">Année de création</p>
+          </div>
+          <div class="text-center p-8 bg-zinc-900/50 border border-white/10 rounded-xl">
+            <p class="text-5xl lg:text-6xl font-serif text-yellow-500 mb-4">12</p>
+            <p class="text-gray-400 uppercase tracking-wide text-sm">Artisans passionnés</p>
+          </div>
+          <div class="text-center p-8 bg-zinc-900/50 border border-white/10 rounded-xl">
+            <p class="text-5xl lg:text-6xl font-serif text-yellow-500 mb-4">5000+</p>
+            <p class="text-gray-400 uppercase tracking-wide text-sm">Clients satisfaits</p>
+          </div>
+          <div class="text-center p-8 bg-zinc-900/50 border border-white/10 rounded-xl">
+            <p class="text-5xl lg:text-6xl font-serif text-yellow-500 mb-4">100%</p>
+            <p class="text-gray-400 uppercase tracking-wide text-sm">Made in France</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nos Valeurs -->
+    <section class="py-20 px-6 lg:px-10 bg-zinc-900/30">
+      <div class="container mx-auto">
+        <div class="text-center mb-16 space-y-4">
+          <h2 class="text-4xl lg:text-5xl font-light text-yellow-500 font-serif">
+            Nos Valeurs
+          </h2>
+          <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+            Ce qui guide chacune de nos actions au quotidien
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div class="bg-black/50 border border-white/10 rounded-xl p-8 space-y-4 hover:border-yellow-500/50 transition-all">
+            <div class="w-16 h-16 rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center">
+              <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-2xl">Transparence</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Prix justes, sans intermédiaires. Vous savez exactement ce que vous payez et pourquoi.
+            </p>
+          </div>
+
+          <div class="bg-black/50 border border-white/10 rounded-xl p-8 space-y-4 hover:border-yellow-500/50 transition-all">
+            <div class="w-16 h-16 rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center">
+              <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-2xl">Durabilité</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Nous créons des lunettes conçues pour durer, avec une garantie à vie sur tous nos modèles.
+            </p>
+          </div>
+
+          <div class="bg-black/50 border border-white/10 rounded-xl p-8 space-y-4 hover:border-yellow-500/50 transition-all">
+            <div class="w-16 h-16 rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center">
+              <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-2xl">Passion</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Notre équipe partage une passion commune : celle de créer des lunettes d'exception.
+            </p>
+          </div>
+
+          <div class="bg-black/50 border border-white/10 rounded-xl p-8 space-y-4 hover:border-yellow-500/50 transition-all">
+            <div class="w-16 h-16 rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center">
+              <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-2xl">Communauté</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Rejoignez une famille de passionnés qui partagent les mêmes valeurs d'excellence.
+            </p>
+          </div>
+
+          <div class="bg-black/50 border border-white/10 rounded-xl p-8 space-y-4 hover:border-yellow-500/50 transition-all">
+            <div class="w-16 h-16 rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center">
+              <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-2xl">Confiance</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Votre satisfaction est notre priorité. Service client réactif et à votre écoute.
+            </p>
+          </div>
+
+          <div class="bg-black/50 border border-white/10 rounded-xl p-8 space-y-4 hover:border-yellow-500/50 transition-all">
+            <div class="w-16 h-16 rounded-full bg-yellow-500/10 border-2 border-yellow-500/30 flex items-center justify-center">
+              <svg class="w-8 h-8 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h3 class="text-yellow-500 font-serif text-2xl">Innovation</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Tradition et modernité se rencontrent pour créer l'excellence d'aujourd'hui.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-20 px-6 lg:px-10">
+      <div class="container mx-auto">
+        <div class="bg-gradient-to-r from-yellow-500/10 to-amber-500/10 border border-yellow-500/30 rounded-2xl p-12 lg:p-16 text-center space-y-8">
+          <h2 class="text-3xl lg:text-5xl font-light text-white">
+            Prêt à créer <span class="text-yellow-500 font-serif italic">votre chef-d'œuvre</span> ?
+          </h2>
+          <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+            Rejoignez des milliers de clients qui ont déjà fait confiance à TaVue pour leurs lunettes sur mesure.
+          </p>
+          <div class="flex flex-wrap gap-4 justify-center pt-4">
+            <a href="/personnaliser" class="btn btn-warning bg-yellow-500 hover:bg-yellow-400 text-black border-none btn-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+              </svg>
+              Créer ma monture
+            </a>
+            <a href="/collection" class="btn btn-outline btn-warning btn-lg">
+              Découvrir la collection
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 lg:px-10">
+    <div class="container mx-auto text-center space-y-6">
+      <nav class="flex justify-center gap-6 text-sm text-gray-400">
+        <a href="/mentions-legales" class="hover:text-yellow-500 transition-colors">Mentions légales</a>
+        <span class="text-white/20">|</span>
+        <a href="/cgv" class="hover:text-yellow-500 transition-colors">CGV</a>
+        <span class="text-white/20">|</span>
+        <a href="/contact" class="hover:text-yellow-500 transition-colors">Contact</a>
+      </nav>
+      <p class="text-yellow-500 font-serif text-sm">
+        Fabrication française – Artisanat d'excellence
+      </p>
+    </div>
+  </footer>
+</Layout>
