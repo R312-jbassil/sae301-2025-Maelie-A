@@ -1,0 +1,47 @@
+---
+// Header avec menu de navigation
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-white/10">
+  <nav class="container mx-auto px-6 lg:px-10 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="text-2xl font-serif text-yellow-500 hover:text-yellow-400 transition-colors">
+        TaVue
+      </a>
+
+      <!-- Menu desktop -->
+      <ul class="hidden md:flex items-center gap-8 text-sm">
+        <li>
+          <a href="/" class="text-white hover:text-yellow-500 transition-colors">
+            Accueil
+          </a>
+        </li>
+        <li>
+          <a href="/personnaliser" class="text-gray-300 hover:text-yellow-500 transition-colors">
+            Personnaliser
+          </a>
+        </li>
+        <li>
+          <a href="/collection" class="text-gray-300 hover:text-yellow-500 transition-colors">
+            Collection
+          </a>
+        </li>
+        <li>
+          <a href="/compte" class="text-gray-300 hover:text-yellow-500 transition-colors">
+            Compte
+          </a>
+        </li>
+      </ul>
+
+      <!-- Menu mobile (hamburger) -->
+      <div class="md:hidden">
+        <button class="btn btn-ghost btn-sm text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 stroke-current">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>

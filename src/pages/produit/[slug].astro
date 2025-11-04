@@ -1,0 +1,298 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+
+// Données des produits (à remplacer par une vraie base de données plus tard)
+const products = {
+  'aviateur-classique': {
+    name: 'Aviateur Classique',
+    category: 'business',
+    price: '289 €',
+    description: 'Lunettes aviateur personnalisables avec un style élégant et intemporel. Parfaites pour un usage quotidien avec une touche business sophistiquée.',
+    images: ['/images/lunettes.png', '/images/lunettes.png', '/images/lunettes.png'],
+    specs: {
+      'Aviator Italian': '',
+      'DOC Model': '',
+      '38 mm': '',
+      '145 mm': ''
+    },
+    includes: [
+      'Étui de luxe offert',
+      'Chiffon microfibre premium',
+      'Certificat d\'authenticité et numérotation',
+      'Garantie à vie'
+    ]
+  },
+  'wayfarer-moderne': {
+    name: 'Wayfarer Moderne',
+    category: 'urbain',
+    price: '249 €',
+    description: 'Design moderne et urbain, parfait pour un style décontracté et tendance.',
+    images: ['/images/lunettes.png', '/images/lunettes.png', '/images/lunettes.png'],
+    specs: {
+      'Aviator Italian': '',
+      'DOC Model': '',
+      '40 mm': '',
+      '143 mm': ''
+    },
+    includes: [
+      'Étui de luxe offert',
+      'Chiffon microfibre premium',
+      'Certificat d\'authenticité et numérotation',
+      'Garantie à vie'
+    ]
+  },
+  'ronde-vintage': {
+    name: 'Ronde Vintage',
+    category: 'féminin',
+    price: '279 €',
+    description: 'Style vintage élégant avec une touche féminine raffinée.',
+    images: ['/images/lunettes.png', '/images/lunettes.png', '/images/lunettes.png'],
+    specs: {
+      'Aviator Italian': '',
+      'DOC Model': '',
+      '42 mm': '',
+      '140 mm': ''
+    },
+    includes: [
+      'Étui de luxe offert',
+      'Chiffon microfibre premium',
+      'Certificat d\'authenticité et numérotation',
+      'Garantie à vie'
+    ]
+  },
+  'sport-performance': {
+    name: 'Sport Performance',
+    category: 'sport',
+    price: '329 €',
+    description: 'Conçues pour la performance sportive avec un design technique et léger.',
+    images: ['/images/lunettes.png', '/images/lunettes.png', '/images/lunettes.png'],
+    specs: {
+      'Aviator Italian': '',
+      'DOC Model': '',
+      '45 mm': '',
+      '148 mm': ''
+    },
+    includes: [
+      'Étui de luxe offert',
+      'Chiffon microfibre premium',
+      'Certificat d\'authenticité et numérotation',
+      'Garantie à vie'
+    ]
+  },
+  'carree-minimaliste': {
+    name: 'Carrée Minimaliste',
+    category: 'business',
+    price: '289 €',
+    description: 'Design minimaliste et épuré pour un look professionnel.',
+    images: ['/images/lunettes.png', '/images/lunettes.png', '/images/lunettes.png'],
+    specs: {
+      'Aviator Italian': '',
+      'DOC Model': '',
+      '41 mm': '',
+      '142 mm': ''
+    },
+    includes: [
+      'Étui de luxe offert',
+      'Chiffon microfibre premium',
+      'Certificat d\'authenticité et numérotation',
+      'Garantie à vie'
+    ]
+  },
+  'cat-eye-elegante': {
+    name: 'Cat-Eye Élégante',
+    category: 'féminin',
+    price: '309 €',
+    description: 'Style cat-eye élégant et sophistiqué pour une allure glamour.',
+    images: ['/images/lunettes.png', '/images/lunettes.png', '/images/lunettes.png'],
+    specs: {
+      'Aviator Italian': '',
+      'DOC Model': '',
+      '43 mm': '',
+      '141 mm': ''
+    },
+    includes: [
+      'Étui de luxe offert',
+      'Chiffon microfibre premium',
+      'Certificat d\'authenticité et numérotation',
+      'Garantie à vie'
+    ]
+  }
+};
+
+// Fonction requise pour les routes dynamiques
+export function getStaticPaths() {
+  return Object.keys(products).map(slug => ({
+    params: { slug },
+    props: { product: products[slug] }
+  }));
+}
+
+const { product } = Astro.props;
+---
+
+<Layout title={`${product.name} - TaVue`}>
+  <Header />
+  
+  <main class="pt-20">
+    <!-- Section Hero Produit -->
+    <section class="min-h-screen px-6 lg:px-10 py-20">
+      <div class="container mx-auto">
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+          <!-- Images à gauche -->
+          <div class="space-y-4">
+            <!-- Image principale -->
+            <div class="aspect-square rounded-2xl overflow-hidden border border-white/10 bg-zinc-900">
+              <img 
+                src={product.images[0]} 
+                alt={product.name}
+                class="w-full h-full object-contain p-8"
+              />
+            </div>
+            
+            <!-- Miniatures -->
+            <div class="grid grid-cols-3 gap-4">
+              {product.images.map((img, index) => (
+                <div class="aspect-square rounded-lg overflow-hidden border border-white/10 bg-zinc-900 cursor-pointer hover:border-yellow-500/50 transition-colors">
+                  <img 
+                    src={img} 
+                    alt={`${product.name} - vue ${index + 1}`}
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Informations à droite -->
+          <div class="space-y-8 lg:sticky lg:top-24">
+            <!-- Badge collection -->
+            <span class="inline-block px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full text-yellow-500 text-sm">
+              SÉRIE COLLECTION 2025
+            </span>
+
+            <!-- Titre -->
+            <div>
+              <h1 class="text-4xl lg:text-5xl font-light text-white mb-4">
+                {product.name}
+              </h1>
+              <p class="text-gray-300 text-lg leading-relaxed">
+                {product.description}
+              </p>
+            </div>
+
+            <!-- Spécifications -->
+            <div class="grid grid-cols-2 gap-4">
+              {Object.entries(product.specs).map(([key, value]) => (
+                <div class="bg-zinc-900 border border-white/10 rounded-lg p-4">
+                  <p class="text-gray-400 text-sm">{key}</p>
+                  {value && <p class="text-white font-light">{value}</p>}
+                </div>
+              ))}
+            </div>
+
+            <!-- Inclus -->
+            <div class="bg-zinc-900/50 border border-white/10 rounded-xl p-6 space-y-3">
+              <h3 class="text-yellow-500 font-serif text-lg mb-4">INCLUS</h3>
+              {product.includes.map((item) => (
+                <div class="flex items-center gap-3">
+                  <svg class="w-5 h-5 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="text-gray-300 text-sm">{item}</span>
+                </div>
+              ))}
+            </div>
+
+            <!-- Prix et actions -->
+            <div class="space-y-4">
+              <div class="flex items-baseline gap-2">
+                <span class="text-yellow-500 text-5xl font-serif">{product.price}</span>
+              </div>
+              
+              <div class="flex gap-4">
+                <button class="btn btn-outline btn-warning flex-1 hover:bg-yellow-500 hover:text-black transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                  </svg>
+                  ESSAYER
+                </button>
+                <button class="btn btn-warning flex-1 bg-yellow-500 hover:bg-yellow-400 text-black border-none">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                  COMMANDER
+                </button>
+              </div>
+
+              <!-- Livraison -->
+              <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 flex items-center gap-3">
+                <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                </svg>
+                <div>
+                  <p class="text-yellow-500 font-serif text-sm">LIVRAISON SOIGNÉE - 2-3 OUVRÉS</p>
+                  <p class="text-gray-400 text-xs">Emballage premium, suivi pas à pas</p>
+                </div>
+              </div>
+
+              <!-- Logo de paiement (optionnel) -->
+              <p class="text-center text-gray-500 text-xs pt-4">
+                Paiement sécurisé
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section savoir-faire -->
+    <section class="py-20 px-6 lg:px-10 bg-zinc-900/30">
+      <div class="container mx-auto">
+        <h2 class="text-3xl lg:text-4xl font-light text-yellow-500 font-serif text-center mb-12">
+          Notre savoir-faire
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center space-y-4">
+            <div class="aspect-video rounded-lg overflow-hidden border border-white/10">
+              <img src="/images/lunettes.png" alt="Artisanat" class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-yellow-500 font-serif">ARTISANAT</h3>
+            <p class="text-gray-400 text-sm">Fabriqué à la main par nos artisans français</p>
+          </div>
+          <div class="text-center space-y-4">
+            <div class="aspect-video rounded-lg overflow-hidden border border-white/10">
+              <img src="/images/lunettes.png" alt="Matériaux" class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-yellow-500 font-serif">MATÉRIAUX</h3>
+            <p class="text-gray-400 text-sm">Les meilleurs matériaux sélectionnés</p>
+          </div>
+          <div class="text-center space-y-4">
+            <div class="aspect-video rounded-lg overflow-hidden border border-white/10">
+              <img src="/images/lunettes.png" alt="Excellence" class="w-full h-full object-cover"/>
+            </div>
+            <h3 class="text-yellow-500 font-serif">EXCELLENCE</h3>
+            <p class="text-gray-400 text-sm">Contrôle qualité rigoureux</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 lg:px-10">
+    <div class="container mx-auto text-center space-y-6">
+      <nav class="flex justify-center gap-6 text-sm text-gray-400">
+        <a href="/mentions-legales" class="hover:text-yellow-500 transition-colors">Mentions légales</a>
+        <span class="text-white/20">|</span>
+        <a href="/cgv" class="hover:text-yellow-500 transition-colors">CGV</a>
+        <span class="text-white/20">|</span>
+        <a href="/contact" class="hover:text-yellow-500 transition-colors">Contact</a>
+      </nav>
+      <p class="text-yellow-500 font-serif text-sm">
+        Fabrication française – Artisanat d'excellence
+      </p>
+    </div>
+  </footer>
+</Layout>

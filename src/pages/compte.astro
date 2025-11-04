@@ -1,0 +1,329 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout title="Mon compte TaVue - Connexion">
+  <Header />
+  
+  <main class="min-h-screen pt-20 px-6 lg:px-10">
+    <div class="container mx-auto py-20">
+      <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+        
+        <!-- Section gauche - Image et texte -->
+        <div class="space-y-8 order-2 lg:order-1">
+          <div class="aspect-square rounded-2xl overflow-hidden border border-white/10">
+            <img 
+              src="/imagewithfallback.png" 
+              alt="Lunettes TaVue" 
+              class="w-full h-full object-cover"
+            />
+          </div>
+          
+          <div class="space-y-4">
+            <h2 class="text-3xl lg:text-4xl font-light text-yellow-500 font-serif">
+              L'excellence à portée de vue
+            </h2>
+            <p class="text-gray-300 text-lg">
+              Rejoignez une communauté exclusive qui redéfinit le luxe accessible.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section droite - Formulaire -->
+        <div class="order-1 lg:order-2">
+          <div class="text-center mb-8">
+            <div class="w-20 h-20 mx-auto mb-6 rounded-full border-2 border-yellow-500 flex items-center justify-center">
+              <span class="text-2xl font-serif text-yellow-500">TaVue</span>
+            </div>
+            <h1 class="text-3xl lg:text-4xl font-light text-yellow-500 mb-2">
+              Mon compte TaVue
+            </h1>
+            <p class="text-gray-400">
+              Fabrication française – Donnez vie à votre style
+            </p>
+          </div>
+
+          <!-- Onglets Connexion / Inscription -->
+          <div class="bg-zinc-900/50 border border-white/10 rounded-2xl p-8 space-y-6">
+            
+            <!-- Tabs -->
+            <div class="flex gap-2 bg-black/50 rounded-lg p-1">
+              <button 
+                id="btn-connexion"
+                class="tab-btn flex-1 py-3 rounded-lg text-sm font-medium transition-all bg-yellow-500 text-black"
+                onclick="switchTab('connexion')"
+              >
+                CONNEXION
+              </button>
+              <button 
+                id="btn-inscription"
+                class="tab-btn flex-1 py-3 rounded-lg text-sm font-medium transition-all text-gray-400 hover:text-white"
+                onclick="switchTab('inscription')"
+              >
+                INSCRIPTION
+              </button>
+            </div>
+
+            <!-- Formulaire Connexion -->
+            <form id="form-connexion" class="space-y-4">
+              <div class="space-y-2">
+                <label class="text-sm text-gray-300 uppercase tracking-wide">
+                  Adresse Email
+                </label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                  </span>
+                  <input 
+                    type="email" 
+                    placeholder="votre@email.com"
+                    class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm text-gray-300 uppercase tracking-wide">
+                  Mot de passe
+                </label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                  </span>
+                  <input 
+                    type="password" 
+                    placeholder="••••••••"
+                    class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between text-sm">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" class="checkbox checkbox-warning checkbox-sm" />
+                  <span class="text-gray-400">Se souvenir</span>
+                </label>
+                <a href="#" class="text-yellow-500 hover:text-yellow-400 transition-colors">
+                  Mot de passe oublié ?
+                </a>
+              </div>
+
+              <button 
+                type="submit"
+                class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-medium py-3 rounded-lg transition-colors uppercase tracking-wide"
+              >
+                Se connecter
+              </button>
+
+              <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                  <div class="w-full border-t border-white/10"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                  <span class="px-4 bg-zinc-900 text-gray-400">OU</span>
+                </div>
+              </div>
+
+              <button 
+                type="button"
+                class="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white py-3 rounded-lg transition-colors flex items-center justify-center gap-3"
+              >
+                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Continuer avec Google
+              </button>
+            </form>
+
+            <!-- Formulaire Inscription (caché par défaut) -->
+            <form id="form-inscription" class="space-y-4 hidden">
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                  <label class="text-sm text-gray-300 uppercase tracking-wide">
+                    Prénom
+                  </label>
+                  <input 
+                    type="text" 
+                    placeholder="Jean"
+                    class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    required
+                  />
+                </div>
+                <div class="space-y-2">
+                  <label class="text-sm text-gray-300 uppercase tracking-wide">
+                    Nom
+                  </label>
+                  <input 
+                    type="text" 
+                    placeholder="Dupont"
+                    class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm text-gray-300 uppercase tracking-wide">
+                  Adresse Email
+                </label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                  </span>
+                  <input 
+                    type="email" 
+                    placeholder="votre@email.com"
+                    class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm text-gray-300 uppercase tracking-wide">
+                  Mot de passe
+                </label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                  </span>
+                  <input 
+                    type="password" 
+                    placeholder="••••••••"
+                    class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <label class="text-sm text-gray-300 uppercase tracking-wide">
+                  Confirmer le mot de passe
+                </label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                  </span>
+                  <input 
+                    type="password" 
+                    placeholder="••••••••"
+                    class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    required
+                  />
+                </div>
+              </div>
+
+              <label class="flex items-start gap-3 cursor-pointer text-sm">
+                <input type="checkbox" class="checkbox checkbox-warning checkbox-sm mt-0.5" required />
+                <span class="text-gray-400">
+                  En créant un compte, vous acceptez nos 
+                  <a href="/cgv" class="text-yellow-500 hover:text-yellow-400">CGU</a> 
+                  et notre 
+                  <a href="#" class="text-yellow-500 hover:text-yellow-400">politique de confidentialité</a>
+                </span>
+              </label>
+
+              <button 
+                type="submit"
+                class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-medium py-3 rounded-lg transition-colors uppercase tracking-wide"
+              >
+                S'inscrire
+              </button>
+
+              <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                  <div class="w-full border-t border-white/10"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                  <span class="px-4 bg-zinc-900 text-gray-400">OU</span>
+                </div>
+              </div>
+
+              <button 
+                type="button"
+                class="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white py-3 rounded-lg transition-colors flex items-center justify-center gap-3"
+              >
+                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Continuer avec Google
+              </button>
+            </form>
+
+            <!-- Message légal -->
+            <p class="text-center text-xs text-gray-500 pt-4">
+              En créant un compte, vous acceptez nos 
+              <a href="/cgv" class="text-yellow-500 hover:text-yellow-400 underline">CGU</a> et notre 
+              <a href="#" class="text-yellow-500 hover:text-yellow-400 underline">politique de confidentialité</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 lg:px-10">
+    <div class="container mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <nav class="flex gap-6 text-sm text-gray-400">
+          <a href="/mentions-legales" class="hover:text-yellow-500 transition-colors">Mentions légales</a>
+          <span class="text-white/20">|</span>
+          <a href="/cgv" class="hover:text-yellow-500 transition-colors">CGV</a>
+          <span class="text-white/20">|</span>
+          <a href="/contact" class="hover:text-yellow-500 transition-colors">Contact</a>
+        </nav>
+        <p class="text-yellow-500 font-serif text-sm">
+          Fabrication française – Artisanat d'excellence
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function switchTab(tab) {
+      const btnConnexion = document.getElementById('btn-connexion');
+      const btnInscription = document.getElementById('btn-inscription');
+      const formConnexion = document.getElementById('form-connexion');
+      const formInscription = document.getElementById('form-inscription');
+
+      if (tab === 'connexion') {
+        btnConnexion.classList.add('bg-yellow-500', 'text-black');
+        btnConnexion.classList.remove('text-gray-400');
+        btnInscription.classList.remove('bg-yellow-500', 'text-black');
+        btnInscription.classList.add('text-gray-400');
+        formConnexion.classList.remove('hidden');
+        formInscription.classList.add('hidden');
+      } else {
+        btnInscription.classList.add('bg-yellow-500', 'text-black');
+        btnInscription.classList.remove('text-gray-400');
+        btnConnexion.classList.remove('bg-yellow-500', 'text-black');
+        btnConnexion.classList.add('text-gray-400');
+        formInscription.classList.remove('hidden');
+        formConnexion.classList.add('hidden');
+      }
+    }
+
+    // Rendre la fonction accessible globalement
+    (window as any).switchTab = switchTab;
+  </script>
+</Layout>

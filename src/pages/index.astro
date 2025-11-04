@@ -1,11 +1,124 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import CardModel from '../components/CardModel.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const models = [
+  { name: 'Aviateur Classique', category: 'business', price: '289€', slug: 'aviateur-classique' },
+  { name: 'Wayfarer Moderne', category: 'urbain', price: '249€', slug: 'wayfarer-moderne' },
+  { name: 'Ronde Vintage', category: 'féminin', price: '279€', slug: 'ronde-vintage' },
+  { name: 'Sport Performance', category: 'sport', price: '329€', slug: 'sport-performance' },
+  { name: 'Carrée Minimaliste', category: 'business', price: '289€', slug: 'carree-minimaliste' },
+  { name: 'Cat-Eye Élégante', category: 'féminin', price: '309€', slug: 'cat-eye-elegante' },
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="TaVue - Lunettes sur mesure artisanales">
+  <Header />
+  
+  <main>
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center pt-20 px-6 lg:px-10">
+	<div class="container mx-auto">
+	  <div class="grid lg:grid-cols-2 gap-12 items-center">
+		<!-- Texte à gauche -->
+		<div class="space-y-8">
+		<!-- Label Collection -->
+		<span class="inline-block px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full text-yellow-500 text-sm">
+		  Collection 2025
+		</span>
+
+		<!-- Titre principal -->
+		<h1 class="text-5xl lg:text-6xl xl:text-7xl font-light leading-tight">
+		  Créez votre<br />
+		  <span class="text-yellow-500 font-serif italic">monture parfaite</span>
+		</h1>
+
+		<!-- Sous-texte -->
+		<p class="text-gray-300 text-lg lg:text-xl max-w-xl">
+		  Sélectionnez votre style, personnalisez chaque détail. Artisanat français d'exception.
+		</p>
+
+		<!-- Labels garantie -->
+		<div class="flex flex-wrap gap-4 pt-4">
+		  <span class="px-5 py-3 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200">
+			Made in Paris 🇫🇷
+		  </span>
+		  <span class="px-5 py-3 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-200">
+			Garantie à vie 💎
+		  </span>
+		</div>
+		</div>
+
+		<!-- Image à droite -->
+		<div class="relative">
+		<div class="aspect-square rounded-2xl overflow-hidden border border-white/10 relative">
+		  <img 
+			src="/imagewithfallback.png" 
+			alt="Lunettes TaVue - Collection 2025" 
+			class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+		  />
+		  <!-- Overlay dégradé noir -->
+		  <div
+			class="absolute inset-0 pointer-events-none"
+			style="background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);"
+		  ></div>
+		</div>
+		</div>
+	  </div>
+	</div>
+    </section>
+
+    <!-- Section Modèles -->
+    <section class="py-20 px-6 lg:px-10">
+      <div class="container mx-auto">
+        <!-- Titres -->
+        <div class="text-center mb-16 space-y-4">
+          <h2 class="text-4xl lg:text-5xl font-light text-yellow-500 font-serif">
+            Choisissez votre modèle
+          </h2>
+          <p class="text-gray-300 text-lg">
+            Six modèles emblématiques, infiniment personnalisables
+          </p>
+        </div>
+
+        <!-- Grille de cartes -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {models.map((model) => (
+            <CardModel 
+              name={model.name} 
+              category={model.category} 
+              price={model.price}
+              slug={model.slug}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 lg:px-10">
+    <div class="container mx-auto text-center space-y-6">
+      <!-- Liens légaux -->
+      <nav class="flex justify-center gap-6 text-sm text-gray-400">
+        <a href="/mentions-legales" class="hover:text-yellow-500 transition-colors">
+          Mentions légales
+        </a>
+        <span class="text-white/20">|</span>
+        <a href="/cgv" class="hover:text-yellow-500 transition-colors">
+          CGV
+        </a>
+        <span class="text-white/20">|</span>
+        <a href="/contact" class="hover:text-yellow-500 transition-colors">
+          Contact
+        </a>
+      </nav>
+
+      <!-- Signature -->
+      <p class="text-yellow-500 font-serif text-sm">
+        Fabrication française – Artisanat d'excellence
+      </p>
+    </div>
+  </footer>
 </Layout>
