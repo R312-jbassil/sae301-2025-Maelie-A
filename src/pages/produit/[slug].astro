@@ -2,138 +2,128 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 
-// Données des produits
-const products: Record<string, any> = {
-  'aviateur-classique': {
-    name: 'Aviateur Classique',
-    category: 'business',
-    price: 289,
-    description: 'Lunettes aviateur personnalisables avec un style élégant et intemporel. Parfaites pour un usage quotidien avec une touche business sophistiquée.',
-    images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
-    specs: {
-      'Style': 'Aviator Italian',
-      'Type': 'DOC Model',
-      'Taille verres': '38 mm',
-      'Longueur branches': '145 mm'
-    },
-    includes: [
-      'Étui de luxe offert',
-      'Chiffon microfibre premium',
-      'Certificat d\'authenticité et numérotation',
-      'Garantie à vie'
-    ]
-  },
-  'wayfarer-moderne': {
-    name: 'Wayfarer Moderne',
-    category: 'urbain',
-    price: 249,
-    description: 'Design moderne et urbain, parfait pour un style décontracté et tendance.',
-    images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
-    specs: {
-      'Style': 'Wayfarer',
-      'Type': 'Urban',
-      'Taille verres': '40 mm',
-      'Longueur branches': '143 mm'
-    },
-    includes: [
-      'Étui de luxe offert',
-      'Chiffon microfibre premium',
-      'Certificat d\'authenticité et numérotation',
-      'Garantie à vie'
-    ]
-  },
-  'ronde-vintage': {
-    name: 'Ronde Vintage',
-    category: 'féminin',
-    price: 279,
-    description: 'Style vintage élégant avec une touche féminine raffinée.',
-    images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
-    specs: {
-      'Style': 'Ronde',
-      'Type': 'Vintage',
-      'Taille verres': '42 mm',
-      'Longueur branches': '140 mm'
-    },
-    includes: [
-      'Étui de luxe offert',
-      'Chiffon microfibre premium',
-      'Certificat d\'authenticité et numérotation',
-      'Garantie à vie'
-    ]
-  },
-  'sport-performance': {
-    name: 'Sport Performance',
-    category: 'sport',
-    price: 329,
-    description: 'Conçues pour la performance sportive avec un design technique et léger.',
-    images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
-    specs: {
-      'Style': 'Sport',
-      'Type': 'Performance',
-      'Taille verres': '45 mm',
-      'Longueur branches': '148 mm'
-    },
-    includes: [
-      'Étui de luxe offert',
-      'Chiffon microfibre premium',
-      'Certificat d\'authenticité et numérotation',
-      'Garantie à vie'
-    ]
-  },
-  'carree-minimaliste': {
-    name: 'Carrée Minimaliste',
-    category: 'business',
-    price: 289,
-    description: 'Design minimaliste et épuré pour un look professionnel.',
-    images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
-    specs: {
-      'Style': 'Carrée',
-      'Type': 'Minimaliste',
-      'Taille verres': '41 mm',
-      'Longueur branches': '142 mm'
-    },
-    includes: [
-      'Étui de luxe offert',
-      'Chiffon microfibre premium',
-      'Certificat d\'authenticité et numérotation',
-      'Garantie à vie'
-    ]
-  },
-  'cat-eye-elegante': {
-    name: 'Cat-Eye Élégante',
-    category: 'féminin',
-    price: 309,
-    description: 'Style cat-eye élégant et sophistiqué pour une allure glamour.',
-    images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
-    specs: {
-      'Style': 'Cat-Eye',
-      'Type': 'Élégante',
-      'Taille verres': '43 mm',
-      'Longueur branches': '141 mm'
-    },
-    includes: [
-      'Étui de luxe offert',
-      'Chiffon microfibre premium',
-      'Certificat d\'authenticité et numérotation',
-      'Garantie à vie'
-    ]
-  }
-};
-
 // Fonction requise pour les routes dynamiques
 export function getStaticPaths() {
-  const productsData: Record<string, any> = {
-    'aviateur-classique': products['aviateur-classique'],
-    'wayfarer-moderne': products['wayfarer-moderne'],
-    'ronde-vintage': products['ronde-vintage'],
-    'sport-performance': products['sport-performance'],
-    'carree-minimaliste': products['carree-minimaliste'],
-    'cat-eye-elegante': products['cat-eye-elegante']
+  const products = {
+    'aviateur-classique': {
+      name: 'Aviateur Classique',
+      category: 'business',
+      price: 289,
+      description: 'Lunettes aviateur personnalisables avec un style élégant et intemporel. Parfaites pour un usage quotidien avec une touche business sophistiquée.',
+      images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
+      specs: {
+        'Style': 'Aviator Italian',
+        'Type': 'DOC Model',
+        'Taille verres': '38 mm',
+        'Longueur branches': '145 mm'
+      },
+      includes: [
+        'Étui de luxe offert',
+        'Chiffon microfibre premium',
+        'Certificat d\'authenticité et numérotation',
+        'Garantie à vie'
+      ]
+    },
+    'wayfarer-moderne': {
+      name: 'Wayfarer Moderne',
+      category: 'urbain',
+      price: 249,
+      description: 'Design moderne et urbain, parfait pour un style décontracté et tendance.',
+      images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
+      specs: {
+        'Style': 'Wayfarer',
+        'Type': 'Urban',
+        'Taille verres': '40 mm',
+        'Longueur branches': '143 mm'
+      },
+      includes: [
+        'Étui de luxe offert',
+        'Chiffon microfibre premium',
+        'Certificat d\'authenticité et numérotation',
+        'Garantie à vie'
+      ]
+    },
+    'ronde-vintage': {
+      name: 'Ronde Vintage',
+      category: 'féminin',
+      price: 279,
+      description: 'Style vintage élégant avec une touche féminine raffinée.',
+      images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
+      specs: {
+        'Style': 'Ronde',
+        'Type': 'Vintage',
+        'Taille verres': '42 mm',
+        'Longueur branches': '140 mm'
+      },
+      includes: [
+        'Étui de luxe offert',
+        'Chiffon microfibre premium',
+        'Certificat d\'authenticité et numérotation',
+        'Garantie à vie'
+      ]
+    },
+    'sport-performance': {
+      name: 'Sport Performance',
+      category: 'sport',
+      price: 329,
+      description: 'Conçues pour la performance sportive avec un design technique et léger.',
+      images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
+      specs: {
+        'Style': 'Sport',
+        'Type': 'Performance',
+        'Taille verres': '45 mm',
+        'Longueur branches': '148 mm'
+      },
+      includes: [
+        'Étui de luxe offert',
+        'Chiffon microfibre premium',
+        'Certificat d\'authenticité et numérotation',
+        'Garantie à vie'
+      ]
+    },
+    'carree-minimaliste': {
+      name: 'Carrée Minimaliste',
+      category: 'business',
+      price: 289,
+      description: 'Design minimaliste et épuré pour un look professionnel.',
+      images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
+      specs: {
+        'Style': 'Carrée',
+        'Type': 'Minimaliste',
+        'Taille verres': '41 mm',
+        'Longueur branches': '142 mm'
+      },
+      includes: [
+        'Étui de luxe offert',
+        'Chiffon microfibre premium',
+        'Certificat d\'authenticité et numérotation',
+        'Garantie à vie'
+      ]
+    },
+    'cat-eye-elegante': {
+      name: 'Cat-Eye Élégante',
+      category: 'féminin',
+      price: 309,
+      description: 'Style cat-eye élégant et sophistiqué pour une allure glamour.',
+      images: ['/lunettes-default.svg', '/lunettes-default.svg', '/lunettes-default.svg'],
+      specs: {
+        'Style': 'Cat-Eye',
+        'Type': 'Élégante',
+        'Taille verres': '43 mm',
+        'Longueur branches': '141 mm'
+      },
+      includes: [
+        'Étui de luxe offert',
+        'Chiffon microfibre premium',
+        'Certificat d\'authenticité et numérotation',
+        'Garantie à vie'
+      ]
+    }
   };
-  
-  return Object.keys(productsData).map(slug => ({
+
+  return Object.keys(products).map(slug => ({
     params: { slug },
-    props: { product: productsData[slug] }
+    props: { product: products[slug] }
   }));
 }
 
