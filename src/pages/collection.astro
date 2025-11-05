@@ -4,13 +4,13 @@ import Header from '../components/Header.astro';
 import CardModel from '../components/CardModel.astro';
 
 const models = [
+  { name: 'Créez la vôtre', category: 'personnalisable', price: 'Sur mesure', slug: 'personnalisation', isCustom: true },
   { name: 'Aviateur Classique', category: 'business', price: '289€', slug: 'aviateur-classique' },
   { name: 'Wayfarer Moderne', category: 'urbain', price: '249€', slug: 'wayfarer-moderne' },
   { name: 'Ronde Vintage', category: 'féminin', price: '279€', slug: 'ronde-vintage' },
   { name: 'Sport Performance', category: 'sport', price: '329€', slug: 'sport-performance' },
   { name: 'Carrée Minimaliste', category: 'business', price: '289€', slug: 'carree-minimaliste' },
   { name: 'Cat-Eye Élégante', category: 'féminin', price: '309€', slug: 'cat-eye-elegante' },
-  { name: 'Créez la vôtre', category: 'personnalisable', price: 'Sur mesure', slug: 'personnaliser', isCustom: true },
 ];
 
 const categories = ['Tous', 'Business', 'Féminin', 'Sport', 'Urbain', 'Personnalisable'];
@@ -103,6 +103,7 @@ const categories = ['Tous', 'Business', 'Féminin', 'Sport', 'Urbain', 'Personna
               category={model.category} 
               price={model.price}
               slug={model.slug}
+              isCustom={model.isCustom}
             />
           ))}
         </div>

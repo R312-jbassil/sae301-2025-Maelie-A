@@ -117,4 +117,33 @@ export function isLoggedIn(): boolean {
   return getCurrentUser() !== null;
 }
 
+export async function loginWithGoogle() {
+  try {
+    const authData = await pb
+      .collection("users")
+      .authWithOAuth2({ provider: "google" });
+
+    // Sauvegarder l'utilisateur dans le localStorage
+    if (authData.record) {
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify({
+          id: authData.record.id,
+          Nom: authData.record.name || "",
+          Prenom: authData.record.username || "",
+          Mail: authData.record.email || "",
+        })
+      );
+    }
+
+    return { success: true, user: authData.record };
+  } catch (error: any) {
+    console.error("Erreur de connexion Google:", error);
+    return {
+      success: false,
+      error: error.message || "Échec de connexion Google",
+    };
+  }
+}
+
 export { pb };

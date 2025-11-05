@@ -146,6 +146,7 @@ import Header from '../components/Header.astro';
 
               <button 
                 type="button"
+                id="googlelogin"
                 class="w-full bg-white/5 hover:bg-white/10 border border-white/10 text-white py-3 rounded-lg transition-colors flex items-center justify-center gap-3"
               >
                 <svg class="w-5 h-5" viewBox="0 0 24 24">
@@ -326,7 +327,7 @@ import Header from '../components/Header.astro';
 </Layout>
 
 <script>
-  import { login, register } from '../lib/pocketbase';
+  import { login, register, loginWithGoogle } from '../lib/pocketbase';
 
   // Éléments du formulaire de connexion
   const formConnexion = document.getElementById('form-connexion') as HTMLFormElement;
@@ -348,6 +349,22 @@ import Header from '../components/Header.astro';
   function hideError() {
     errorMessage.classList.add('hidden');
   }
+
+  // Connexion avec Google
+  const googlelogin = document.getElementById('googlelogin');
+  googlelogin?.addEventListener('click', async () => {
+    try {
+      const result = await loginWithGoogle();
+      if (result.success) {
+        window.location.href = '/profil';
+      } else {
+        showError(result.error || 'Échec de connexion Google');
+      }
+    } catch (err) {
+      showError('Échec de connexion Google');
+      console.error(err);
+    }
+  });
 
   // Gestion du formulaire de connexion
   formConnexion?.addEventListener('submit', async (e) => {
