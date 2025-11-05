@@ -241,8 +241,21 @@ import Layout from '../layouts/Layout.astro';
                 </svg>
                 COMMANDER
               </button>
+
+              <!-- Champ pour nommer la création -->
+              <div class="space-y-2">
+                <input 
+                  type="text" 
+                  id="designName"
+                  placeholder="Nom de votre création (optionnel)"
+                  class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                />
+              </div>
               
-              <button class="w-full border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500/10 font-bold py-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+              <button 
+                id="saveDesignBtn"
+                class="w-full border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500/10 font-bold py-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
                 </svg>
@@ -538,6 +551,54 @@ import Layout from '../layouts/Layout.astro';
       window.location.href = '/panier';
     }
 
+    // Sauvegarder la création dans PocketBase
+    async function saveDesign() {
+      if (!selectedModel) {
+        alert('Veuillez sélectionner un modèle');
+        return;
+      }
+
+      // Vérifier si l'utilisateur est connecté
+      const userStr = localStorage.getItem('currentUser');
+      if (!userStr) {
+        alert('Veuillez vous connecter pour enregistrer votre création');
+        window.location.href = '/compte';
+        return;
+      }
+
+      const user = JSON.parse(userStr);
+
+      // Récupérer le nom personnalisé
+      const designNameInput = document.getElementById('designName') as HTMLInputElement;
+      const customName = designNameInput?.value.trim();
+
+      try {
+        // Importer PocketBase
+        const { pb } = await import('../lib/pocketbase');
+
+        // Préparer les données (uniquement les champs qui existent dans la collection)
+        const designData = {
+          Nom_modele: customName || selectedModel.Nom, // Utiliser le nom personnalisé ou le nom du modèle
+          Prix: selectedModel.Prix_de_base,
+          Date_de_creation: new Date().toISOString()
+        };
+
+        // Sauvegarder dans PocketBase
+        const record = await pb.collection('Lunette').create(designData);
+        
+        alert('✓ Création sauvegardée avec succès !');
+        console.log('Design sauvegardé:', record);
+        
+        // Vider le champ de nom
+        if (designNameInput) {
+          designNameInput.value = '';
+        }
+      } catch (error) {
+        console.error('Erreur lors de la sauvegarde:', error);
+        alert('❌ Erreur lors de la sauvegarde. Veuillez réessayer.');
+      }
+    }
+
     // Gestion des sliders
     function setupSliders() {
       const lensSize = document.getElementById('lensSize') as HTMLInputElement;
@@ -567,6 +628,11 @@ import Layout from '../layouts/Layout.astro';
       const addToCartBtn = document.getElementById('addToCartBtn');
       if (addToCartBtn) {
         addToCartBtn.addEventListener('click', addToCart);
+      }
+
+      const saveDesignBtn = document.getElementById('saveDesignBtn');
+      if (saveDesignBtn) {
+        saveDesignBtn.addEventListener('click', saveDesign);
       }
     });
   </script>

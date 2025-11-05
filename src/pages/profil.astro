@@ -90,6 +90,23 @@ import Header from '../components/Header.astro';
             </button>
           </div>
         </div>
+
+        <!-- Mes créations sauvegardées -->
+        <div class="max-w-6xl mx-auto mt-12">
+          <h2 class="text-3xl font-light text-yellow-500 mb-8">
+            Mes créations sauvegardées
+          </h2>
+          
+          <div id="saved-designs" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Les créations seront chargées ici -->
+            <div class="col-span-full text-center py-12 text-gray-400">
+              <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              <p>Chargement de vos créations...</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -113,7 +130,7 @@ import Header from '../components/Header.astro';
   </footer>
 
   <script>
-    import { getCurrentUser, logout } from '../lib/pocketbase';
+    import { getCurrentUser, logout, pb } from '../lib/pocketbase';
 
     // Vérifier si l'utilisateur est connecté
     const user = getCurrentUser();
@@ -134,7 +151,102 @@ import Header from '../components/Header.astro';
       if (prenomEl) prenomEl.textContent = user.Prenom || '-';
       if (nomEl) nomEl.textContent = user.Nom || '-';
       if (emailEl) emailEl.textContent = user.Mail || '-';
+
+      // Charger les créations sauvegardées
+      loadSavedDesigns();
     }
+
+    // Charger les créations sauvegardées
+    async function loadSavedDesigns() {
+      const container = document.getElementById('saved-designs');
+      if (!container) return;
+
+      try {
+        // Récupérer toutes les lunettes (car pas de champ user dans la collection)
+        const records = await pb.collection('Lunette').getList(1, 50, {
+          sort: '-created',
+        });
+
+        if (records.items.length === 0) {
+          container.innerHTML = `
+            <div class="col-span-full text-center py-12 text-gray-400">
+              <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+              </svg>
+              <p class="text-lg mb-2">Aucune création sauvegardée</p>
+              <p class="text-sm">Créez votre première paire de lunettes personnalisées !</p>
+              <a href="/personnalisation" class="inline-block mt-4 btn btn-warning bg-yellow-500 hover:bg-yellow-400 text-black border-none">
+                Créer maintenant
+              </a>
+            </div>
+          `;
+          return;
+        }
+
+        // Afficher les créations
+        container.innerHTML = records.items.map((design: any) => {
+          const date = new Date(design.Date_de_creation || design.created);
+          const formattedDate = date.toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          });
+
+          return `
+            <div class="bg-zinc-900 border border-white/10 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-all">
+              <div class="aspect-square bg-black flex items-center justify-center p-6">
+                <img src="/lunettes-default.svg" alt="${design.Nom_modele}" class="w-full h-full object-contain" />
+              </div>
+              <div class="p-4 space-y-2">
+                <h3 class="text-lg font-serif text-yellow-500">${design.Nom_modele || 'Création personnalisée'}</h3>
+                <p class="text-sm text-gray-400">Créée le ${formattedDate}</p>
+                <p class="text-lg font-bold text-yellow-500">${design.Prix || 0}€</p>
+                <div class="flex gap-2 pt-2">
+                  <button 
+                    onclick="window.location.href='/personnalisation'" 
+                    class="flex-1 btn btn-sm btn-outline btn-warning"
+                  >
+                    Modifier
+                  </button>
+                  <button 
+                    onclick="deleteDesign('${design.id}')" 
+                    class="btn btn-sm btn-outline btn-error"
+                  >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+      } catch (error) {
+        console.error('Erreur lors du chargement des créations:', error);
+        container.innerHTML = `
+          <div class="col-span-full text-center py-12 text-red-400">
+            <p>Erreur lors du chargement de vos créations</p>
+          </div>
+        `;
+      }
+    }
+
+    // Supprimer une création
+    window.deleteDesign = async function(id: string) {
+      if (!confirm('Êtes-vous sûr de vouloir supprimer cette création ?')) {
+        return;
+      }
+
+      try {
+        await pb.collection('Lunette').delete(id);
+        loadSavedDesigns(); // Recharger la liste
+        alert('✓ Création supprimée avec succès !');
+      } catch (error) {
+        console.error('Erreur lors de la suppression:', error);
+        alert('❌ Erreur lors de la suppression');
+      }
+    };
 
     // Bouton de déconnexion
     const btnLogout = document.getElementById('btn-logout');
