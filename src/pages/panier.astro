@@ -1,0 +1,268 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout title="Panier - TaVue">
+  <Header />
+  
+  <main class="pt-20 min-h-screen">
+    <!-- Header du panier -->
+    <section class="px-6 lg:px-10 py-12 border-b border-white/10">
+      <div class="container mx-auto">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-4xl lg:text-5xl font-light text-white mb-2">
+              Votre <span class="text-yellow-500 font-serif italic">Panier</span>
+            </h1>
+            <p class="text-gray-400">Finalisez votre commande</p>
+          </div>
+          <a 
+            href="/collection" 
+            class="btn btn-outline btn-warning hover:bg-yellow-500 hover:text-black transition-colors"
+          >
+            Continuer mes achats
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contenu du panier -->
+    <section class="px-6 lg:px-10 py-12">
+      <div class="container mx-auto">
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Liste des articles -->
+          <div class="lg:col-span-2 space-y-4">
+            <div id="cartItems" class="space-y-4">
+              <!-- Les articles seront injectés ici par JavaScript -->
+              <div class="text-center py-20 bg-zinc-900/30 rounded-xl border border-white/10">
+                <svg class="w-20 h-20 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                <p class="text-gray-400 text-lg">Votre panier est vide</p>
+                <a href="/collection" class="btn btn-warning bg-yellow-500 hover:bg-yellow-400 text-black border-none mt-6">
+                  Découvrir la collection
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Résumé de la commande -->
+          <div class="lg:col-span-1">
+            <div class="bg-zinc-900/50 border border-white/10 rounded-xl p-6 sticky top-24">
+              <h2 class="text-2xl font-light text-white mb-6">Résumé</h2>
+              
+              <div class="space-y-4 mb-6">
+                <div class="flex justify-between text-gray-300">
+                  <span>Sous-total (<span id="itemCount">0</span> article<span id="itemPlural">s</span>)</span>
+                  <span id="subtotal">0 €</span>
+                </div>
+                <div class="flex justify-between text-gray-300">
+                  <span>Livraison</span>
+                  <span id="shipping" class="text-yellow-500">Gratuite</span>
+                </div>
+                <div class="border-t border-white/10 pt-4 flex justify-between text-xl font-serif">
+                  <span class="text-white">Total</span>
+                  <span id="total" class="text-yellow-500">0 €</span>
+                </div>
+              </div>
+
+              <button 
+                id="checkoutBtn"
+                class="w-full btn btn-warning bg-yellow-500 hover:bg-yellow-400 text-black border-none mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Passer la commande
+              </button>
+
+              <div class="space-y-3 text-sm text-gray-400">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Paiement sécurisé</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Livraison 2-3 jours</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Garantie à vie</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 lg:px-10">
+    <div class="container mx-auto text-center space-y-6">
+      <nav class="flex justify-center gap-6 text-sm text-gray-400">
+        <a href="/mentions-legales" class="hover:text-yellow-500 transition-colors">Mentions légales</a>
+        <span class="text-white/20">|</span>
+        <a href="/cgv" class="hover:text-yellow-500 transition-colors">CGV</a>
+        <span class="text-white/20">|</span>
+        <a href="/contact" class="hover:text-yellow-500 transition-colors">Contact</a>
+      </nav>
+      <p class="text-yellow-500 font-serif text-sm">
+        Fabrication française – Artisanat d'excellence
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    import { isLoggedIn } from '../lib/pocketbase';
+
+    interface CartItem {
+      modelId?: string;
+      modelName: string;
+      colors?: {
+        monture: string;
+        branches: string;
+        verres: string;
+      };
+      material?: string;
+      price: number;
+      date: string;
+      quantity?: number;
+    }
+
+    // Charger le panier
+    function loadCart() {
+      const cart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
+      const cartItemsContainer = document.getElementById('cartItems');
+      
+      if (!cartItemsContainer) return;
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = `
+          <div class="text-center py-20 bg-zinc-900/30 rounded-xl border border-white/10">
+            <svg class="w-20 h-20 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <p class="text-gray-400 text-lg mb-4">Votre panier est vide</p>
+            <a href="/collection" class="btn btn-warning bg-yellow-500 hover:bg-yellow-400 text-black border-none">
+              Découvrir la collection
+            </a>
+          </div>
+        `;
+        updateSummary(cart);
+        return;
+      }
+
+      cartItemsContainer.innerHTML = cart.map((item, index) => `
+        <div class="bg-zinc-900/50 border border-white/10 rounded-xl p-6 hover:border-yellow-500/50 transition-all">
+          <div class="flex gap-6">
+            <!-- Image -->
+            <div class="w-32 h-32 rounded-lg bg-black/30 flex items-center justify-center flex-shrink-0">
+              <img src="/lunettes-default.svg" alt="${item.modelName}" class="w-full h-full object-contain p-2" />
+            </div>
+
+            <!-- Détails -->
+            <div class="flex-1">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-xl font-light text-white mb-2">${item.modelName}</h3>
+                  ${item.colors ? `
+                    <div class="flex gap-2 items-center text-sm text-gray-400">
+                      <span>Monture:</span>
+                      <div class="w-4 h-4 rounded-full border border-white/20" style="background-color: ${item.colors.monture}"></div>
+                      <span class="mx-2">|</span>
+                      <span>Branches:</span>
+                      <div class="w-4 h-4 rounded-full border border-white/20" style="background-color: ${item.colors.branches}"></div>
+                      <span class="mx-2">|</span>
+                      <span>Verres:</span>
+                      <div class="w-4 h-4 rounded-full border border-white/20" style="background-color: ${item.colors.verres === 'transparent' ? '#E5E7EB' : item.colors.verres}"></div>
+                    </div>
+                  ` : ''}
+                  ${item.material ? `<p class="text-sm text-gray-400 mt-1">Matériau: ${item.material}</p>` : ''}
+                </div>
+                <button 
+                  onclick="removeFromCart(${index})"
+                  class="text-gray-400 hover:text-red-500 transition-colors"
+                  title="Retirer du panier"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="flex justify-between items-end">
+                <div class="text-sm text-gray-400">
+                  Ajouté le ${new Date(item.date).toLocaleDateString('fr-FR')}
+                </div>
+                <div class="text-2xl font-serif text-yellow-500">
+                  ${item.price} €
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      updateSummary(cart);
+    }
+
+    // Mettre à jour le résumé
+    function updateSummary(cart: CartItem[]) {
+      const itemCount = cart.length;
+      const subtotal = cart.reduce((sum, item) => sum + (item.price || 0), 0);
+      const total = subtotal;
+
+      const itemCountEl = document.getElementById('itemCount');
+      const itemPluralEl = document.getElementById('itemPlural');
+      const subtotalEl = document.getElementById('subtotal');
+      const totalEl = document.getElementById('total');
+      const checkoutBtn = document.getElementById('checkoutBtn') as HTMLButtonElement;
+
+      if (itemCountEl) itemCountEl.textContent = itemCount.toString();
+      if (itemPluralEl) itemPluralEl.textContent = itemCount > 1 ? 's' : '';
+      if (subtotalEl) subtotalEl.textContent = `${subtotal} €`;
+      if (totalEl) totalEl.textContent = `${total} €`;
+      if (checkoutBtn) checkoutBtn.disabled = itemCount === 0;
+    }
+
+    // Retirer un article du panier
+    (window as any).removeFromCart = (index: number) => {
+      const cart: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart();
+    };
+
+    // Passer la commande
+    document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+      if (!isLoggedIn()) {
+        alert('Veuillez vous connecter pour passer commande');
+        window.location.href = '/compte';
+        return;
+      }
+
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      if (cart.length === 0) {
+        alert('Votre panier est vide');
+        return;
+      }
+
+      // Simuler la commande
+      alert('✓ Commande passée avec succès !\n\nVous recevrez un email de confirmation.');
+      localStorage.removeItem('cart');
+      window.location.href = '/profil';
+    });
+
+    // Charger le panier au chargement de la page
+    document.addEventListener('DOMContentLoaded', loadCart);
+  </script>
+</Layout>

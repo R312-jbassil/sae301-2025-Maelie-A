@@ -44,6 +44,13 @@ import Header from '../components/Header.astro';
             </p>
           </div>
 
+          <!-- Message d'erreur -->
+          <div id="errorMessage" class="hidden mb-6 max-w-6xl mx-auto">
+            <div class="alert bg-red-500/10 border-red-500/30 text-red-500 p-4 rounded-lg border text-center">
+              <span id="errorText"></span>
+            </div>
+          </div>
+
           <!-- Onglets Connexion / Inscription -->
           <div class="bg-zinc-900/50 border border-white/10 rounded-2xl p-8 space-y-6">
             
@@ -79,6 +86,8 @@ import Header from '../components/Header.astro';
                   </span>
                   <input 
                     type="email" 
+                    id="email-connexion"
+                    name="Mail"
                     placeholder="votre@email.com"
                     class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
                     required
@@ -98,6 +107,8 @@ import Header from '../components/Header.astro';
                   </span>
                   <input 
                     type="password" 
+                    id="password-connexion"
+                    name="Mot_de_passe"
                     placeholder="••••••••"
                     class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
                     required
@@ -117,9 +128,11 @@ import Header from '../components/Header.astro';
 
               <button 
                 type="submit"
+                id="submitBtn"
                 class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-medium py-3 rounded-lg transition-colors uppercase tracking-wide"
               >
-                Se connecter
+                <span id="btnText">Se connecter</span>
+                <span id="btnLoading" class="loading loading-spinner loading-sm hidden">⏳</span>
               </button>
 
               <div class="relative my-6">
@@ -145,7 +158,7 @@ import Header from '../components/Header.astro';
               </button>
             </form>
 
-            <!-- Formulaire Inscription (caché par défaut) -->
+            <!-- Formulaire Inscription -->
             <form id="form-inscription" class="space-y-4 hidden">
               <div class="grid md:grid-cols-2 gap-4">
                 <div class="space-y-2">
@@ -154,6 +167,8 @@ import Header from '../components/Header.astro';
                   </label>
                   <input 
                     type="text" 
+                    id="prenom"
+                    name="Prenom"
                     placeholder="Jean"
                     class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
                     required
@@ -165,6 +180,8 @@ import Header from '../components/Header.astro';
                   </label>
                   <input 
                     type="text" 
+                    id="nom"
+                    name="Nom"
                     placeholder="Dupont"
                     class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
                     required
@@ -184,6 +201,8 @@ import Header from '../components/Header.astro';
                   </span>
                   <input 
                     type="email" 
+                    id="email-inscription"
+                    name="Mail"
                     placeholder="votre@email.com"
                     class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
                     required
@@ -203,7 +222,10 @@ import Header from '../components/Header.astro';
                   </span>
                   <input 
                     type="password" 
+                    id="password"
+                    name="Mot_de_passe"
                     placeholder="••••••••"
+                    minlength="8"
                     class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
                     required
                   />
@@ -222,7 +244,10 @@ import Header from '../components/Header.astro';
                   </span>
                   <input 
                     type="password" 
+                    id="passwordConfirm"
+                    name="passwordConfirm"
                     placeholder="••••••••"
+                    minlength="8"
                     class="w-full bg-black/50 border border-white/10 rounded-lg py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
                     required
                   />
@@ -298,32 +323,146 @@ import Header from '../components/Header.astro';
       </div>
     </div>
   </footer>
+</Layout>
 
-  <script>
-    function switchTab(tab) {
-      const btnConnexion = document.getElementById('btn-connexion');
-      const btnInscription = document.getElementById('btn-inscription');
-      const formConnexion = document.getElementById('form-connexion');
-      const formInscription = document.getElementById('form-inscription');
+<script>
+  import { login, register } from '../lib/pocketbase';
 
-      if (tab === 'connexion') {
-        btnConnexion.classList.add('bg-yellow-500', 'text-black');
-        btnConnexion.classList.remove('text-gray-400');
-        btnInscription.classList.remove('bg-yellow-500', 'text-black');
-        btnInscription.classList.add('text-gray-400');
-        formConnexion.classList.remove('hidden');
-        formInscription.classList.add('hidden');
-      } else {
-        btnInscription.classList.add('bg-yellow-500', 'text-black');
-        btnInscription.classList.remove('text-gray-400');
-        btnConnexion.classList.remove('bg-yellow-500', 'text-black');
-        btnConnexion.classList.add('text-gray-400');
-        formInscription.classList.remove('hidden');
-        formConnexion.classList.add('hidden');
-      }
+  // Éléments du formulaire de connexion
+  const formConnexion = document.getElementById('form-connexion') as HTMLFormElement;
+  const emailInput = document.getElementById('email-connexion') as HTMLInputElement;
+  const passwordInput = document.getElementById('password-connexion') as HTMLInputElement;
+  const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
+  const btnText = document.getElementById('btnText') as HTMLSpanElement;
+  const btnLoading = document.getElementById('btnLoading') as HTMLSpanElement;
+  const errorMessage = document.getElementById('errorMessage') as HTMLDivElement;
+  const errorText = document.getElementById('errorText') as HTMLSpanElement;
+
+  // Fonction pour afficher une erreur
+  function showError(message: string) {
+    errorText.textContent = message;
+    errorMessage.classList.remove('hidden');
+  }
+
+  // Fonction pour masquer l'erreur
+  function hideError() {
+    errorMessage.classList.add('hidden');
+  }
+
+  // Gestion du formulaire de connexion
+  formConnexion?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+      showError('Veuillez remplir tous les champs');
+      return;
     }
 
-    // Rendre la fonction accessible globalement
-    (window as any).switchTab = switchTab;
-  </script>
-</Layout>
+    // Désactiver le bouton et afficher le loading
+    submitBtn.disabled = true;
+    btnText.classList.add('hidden');
+    btnLoading.classList.remove('hidden');
+
+    try {
+      const result = await login(email, password);
+
+      if (result.success) {
+        // Afficher succès
+        const successDiv = document.createElement('div');
+        successDiv.className = 'alert bg-green-500/10 border-green-500/30 text-green-500 p-4 rounded-lg border text-center mb-6';
+        successDiv.textContent = '✓ Connexion réussie ! Redirection...';
+        errorMessage.parentElement?.insertBefore(successDiv, errorMessage);
+
+        // Redirection après 1 seconde
+        setTimeout(() => {
+          window.location.href = '/profil';
+        }, 1000);
+      } else {
+        showError(result.error || 'Email ou mot de passe incorrect');
+        submitBtn.disabled = false;
+        btnText.classList.remove('hidden');
+        btnLoading.classList.add('hidden');
+      }
+    } catch (error) {
+      showError('Une erreur est survenue. Veuillez réessayer.');
+      submitBtn.disabled = false;
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+    }
+  });
+
+  // Gestion du formulaire d'inscription
+  const formInscription = document.getElementById('form-inscription') as HTMLFormElement;
+  formInscription?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+
+    const prenom = (document.getElementById('prenom') as HTMLInputElement).value.trim();
+    const nom = (document.getElementById('nom') as HTMLInputElement).value.trim();
+    const email = (document.getElementById('email-inscription') as HTMLInputElement).value.trim();
+    const password = (document.getElementById('password') as HTMLInputElement).value;
+    const passwordConfirm = (document.getElementById('passwordConfirm') as HTMLInputElement).value;
+
+    if (password !== passwordConfirm) {
+      showError('Les mots de passe ne correspondent pas');
+      return;
+    }
+
+    if (password.length < 8) {
+      showError('Le mot de passe doit contenir au moins 8 caractères');
+      return;
+    }
+
+    try {
+      const result = await register(email, password, nom, prenom);
+
+      if (result.success) {
+        const successDiv = document.createElement('div');
+        successDiv.className = 'alert bg-green-500/10 border-green-500/30 text-green-500 p-4 rounded-lg border text-center mb-6';
+        successDiv.textContent = '✓ Compte créé ! Connexion en cours...';
+        errorMessage.parentElement?.insertBefore(successDiv, errorMessage);
+
+        // Connexion automatique puis redirection
+        setTimeout(async () => {
+          const loginResult = await login(email, password);
+          if (loginResult.success) {
+            window.location.href = '/profil';
+          }
+        }, 1000);
+      } else {
+        showError(result.error || 'Erreur lors de l\'inscription');
+      }
+    } catch (error) {
+      showError('Une erreur est survenue. Veuillez réessayer.');
+    }
+  });
+
+  function switchTab(tab: string) {
+    const btnConnexion = document.getElementById('btn-connexion');
+    const btnInscription = document.getElementById('btn-inscription');
+    const formConnexion = document.getElementById('form-connexion');
+    const formInscription = document.getElementById('form-inscription');
+
+    if (tab === 'connexion') {
+      btnConnexion?.classList.add('bg-yellow-500', 'text-black');
+      btnConnexion?.classList.remove('text-gray-400');
+      btnInscription?.classList.remove('bg-yellow-500', 'text-black');
+      btnInscription?.classList.add('text-gray-400');
+      formConnexion?.classList.remove('hidden');
+      formInscription?.classList.add('hidden');
+    } else {
+      btnInscription?.classList.add('bg-yellow-500', 'text-black');
+      btnInscription?.classList.remove('text-gray-400');
+      btnConnexion?.classList.remove('bg-yellow-500', 'text-black');
+      btnConnexion?.classList.add('text-gray-400');
+      formInscription?.classList.remove('hidden');
+      formConnexion?.classList.add('hidden');
+    }
+  }
+
+  (window as any).switchTab = switchTab;
+</script>

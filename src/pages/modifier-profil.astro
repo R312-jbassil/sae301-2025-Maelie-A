@@ -1,0 +1,383 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout title="Modifier mon profil - TaVue">
+  <Header />
+  
+  <main class="min-h-screen pt-20 px-6 lg:px-10">
+    <!-- Message d'alerte si non connecté -->
+    <div id="not-logged-in" class="hidden">
+      <div class="container mx-auto py-20 text-center">
+        <h1 class="text-4xl font-light text-yellow-500 mb-4">Accès refusé</h1>
+        <p class="text-gray-300 mb-8">Vous devez être connecté pour accéder à cette page.</p>
+        <a href="/compte" class="btn btn-warning bg-yellow-500 hover:bg-yellow-400 text-black border-none">
+          Se connecter
+        </a>
+      </div>
+    </div>
+
+    <!-- Contenu du formulaire -->
+    <div id="edit-content" class="hidden">
+      <div class="container mx-auto py-20">
+        <div class="max-w-2xl mx-auto">
+          <div class="mb-8">
+            <a href="/profil" class="text-gray-400 hover:text-yellow-500 transition-colors flex items-center gap-2 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+              Retour au profil
+            </a>
+            <h1 class="text-4xl font-light text-yellow-500 mb-2">
+              Modifier mon profil
+            </h1>
+            <p class="text-gray-400">
+              Mettez à jour vos informations personnelles
+            </p>
+          </div>
+
+          <!-- Messages -->
+          <div id="errorMessage" class="hidden alert bg-red-500/10 border-red-500/30 text-red-500 p-4 rounded-lg border mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span id="errorText"></span>
+          </div>
+
+          <div id="successMessage" class="hidden alert bg-green-500/10 border-green-500/30 text-green-500 p-4 rounded-lg border mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span id="successText"></span>
+          </div>
+
+          <!-- Formulaire -->
+          <div class="bg-zinc-900/50 border border-white/10 rounded-2xl p-8">
+            <form id="editForm" class="space-y-6">
+              
+              <!-- Informations personnelles -->
+              <div>
+                <h2 class="text-xl font-medium text-yellow-500 mb-4">
+                  Informations personnelles
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="space-y-2">
+                    <label class="text-sm text-gray-300 uppercase tracking-wide">
+                      Prénom *
+                    </label>
+                    <input 
+                      type="text" 
+                      id="prenom"
+                      placeholder="Jean"
+                      class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                      required
+                    />
+                  </div>
+
+                  <div class="space-y-2">
+                    <label class="text-sm text-gray-300 uppercase tracking-wide">
+                      Nom *
+                    </label>
+                    <input 
+                      type="text" 
+                      id="nom"
+                      placeholder="Dupont"
+                      class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Email (non modifiable) -->
+              <div>
+                <h2 class="text-xl font-medium text-yellow-500 mb-4">
+                  Adresse email
+                </h2>
+                <div class="space-y-2">
+                  <label class="text-sm text-gray-300 uppercase tracking-wide">
+                    Email
+                  </label>
+                  <input 
+                    type="email" 
+                    id="email"
+                    class="w-full bg-black/30 border border-white/5 rounded-lg py-3 px-4 text-gray-400 cursor-not-allowed"
+                    disabled
+                  />
+                  <p class="text-xs text-gray-500">
+                    L'adresse email ne peut pas être modifiée
+                  </p>
+                </div>
+              </div>
+
+              <!-- Changer le mot de passe -->
+              <div>
+                <h2 class="text-xl font-medium text-yellow-500 mb-4">
+                  Modifier le mot de passe
+                </h2>
+                <p class="text-sm text-gray-400 mb-4">
+                  Laissez vide si vous ne souhaitez pas changer votre mot de passe
+                </p>
+
+                <div class="space-y-4">
+                  <div class="space-y-2">
+                    <label class="text-sm text-gray-300 uppercase tracking-wide">
+                      Mot de passe actuel
+                    </label>
+                    <input 
+                      type="password" 
+                      id="currentPassword"
+                      placeholder="••••••••"
+                      class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    />
+                  </div>
+
+                  <div class="space-y-2">
+                    <label class="text-sm text-gray-300 uppercase tracking-wide">
+                      Nouveau mot de passe
+                    </label>
+                    <input 
+                      type="password" 
+                      id="newPassword"
+                      placeholder="••••••••"
+                      minlength="8"
+                      class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    />
+                    <p class="text-xs text-gray-500">
+                      Minimum 8 caractères
+                    </p>
+                  </div>
+
+                  <div class="space-y-2">
+                    <label class="text-sm text-gray-300 uppercase tracking-wide">
+                      Confirmer le nouveau mot de passe
+                    </label>
+                    <input 
+                      type="password" 
+                      id="confirmPassword"
+                      placeholder="••••••••"
+                      minlength="8"
+                      class="w-full bg-black/50 border border-white/10 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:border-yellow-500 focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Boutons d'action -->
+              <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                <button 
+                  type="submit"
+                  id="submitBtn"
+                  class="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black font-medium py-3 rounded-lg transition-colors uppercase tracking-wide flex items-center justify-center gap-2"
+                >
+                  <span id="btnText">Enregistrer les modifications</span>
+                  <span id="btnLoading" class="loading loading-spinner loading-sm hidden"></span>
+                </button>
+                <a 
+                  href="/profil"
+                  class="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white font-medium py-3 rounded-lg transition-colors uppercase tracking-wide text-center"
+                >
+                  Annuler
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 lg:px-10">
+    <div class="container mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <nav class="flex gap-6 text-sm text-gray-400">
+          <a href="/mentions-legales" class="hover:text-yellow-500 transition-colors">Mentions légales</a>
+          <span class="text-white/20">|</span>
+          <a href="/cgv" class="hover:text-yellow-500 transition-colors">CGV</a>
+          <span class="text-white/20">|</span>
+          <a href="/contact" class="hover:text-yellow-500 transition-colors">Contact</a>
+        </nav>
+        <p class="text-yellow-500 font-serif text-sm">
+          Fabrication française – Artisanat d'excellence
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    import { getCurrentUser, pb } from '../lib/pocketbase';
+
+    // Vérifier si l'utilisateur est connecté
+    const user = getCurrentUser();
+    const notLoggedIn = document.getElementById('not-logged-in');
+    const editContent = document.getElementById('edit-content');
+
+    if (!user) {
+      console.log('Utilisateur non connecté');
+      notLoggedIn?.classList.remove('hidden');
+    } else {
+      console.log('Utilisateur connecté:', user);
+      editContent?.classList.remove('hidden');
+      
+      // Pré-remplir le formulaire
+      const prenomInput = document.getElementById('prenom') as HTMLInputElement;
+      const nomInput = document.getElementById('nom') as HTMLInputElement;
+      const emailInput = document.getElementById('email') as HTMLInputElement;
+
+      if (prenomInput) prenomInput.value = user.Prenom || '';
+      if (nomInput) nomInput.value = user.Nom || '';
+      if (emailInput) emailInput.value = user.Mail || '';
+    }
+
+    // Éléments du formulaire
+    const form = document.getElementById('editForm') as HTMLFormElement;
+    const submitBtn = document.getElementById('submitBtn') as HTMLButtonElement;
+    const btnText = document.getElementById('btnText') as HTMLSpanElement;
+    const btnLoading = document.getElementById('btnLoading') as HTMLSpanElement;
+    const errorMessage = document.getElementById('errorMessage') as HTMLDivElement;
+    const errorText = document.getElementById('errorText') as HTMLSpanElement;
+    const successMessage = document.getElementById('successMessage') as HTMLDivElement;
+    const successText = document.getElementById('successText') as HTMLSpanElement;
+
+    // Fonction pour afficher une erreur
+    function showError(message: string) {
+      errorText.textContent = message;
+      errorMessage.classList.remove('hidden');
+      successMessage.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Fonction pour afficher un succès
+    function showSuccess(message: string) {
+      successText.textContent = message;
+      successMessage.classList.remove('hidden');
+      errorMessage.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Fonction pour masquer les messages
+    function hideMessages() {
+      errorMessage.classList.add('hidden');
+      successMessage.classList.add('hidden');
+    }
+
+    // Gestion de la soumission du formulaire
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideMessages();
+
+      if (!user) return;
+
+      const prenom = (document.getElementById('prenom') as HTMLInputElement).value.trim();
+      const nom = (document.getElementById('nom') as HTMLInputElement).value.trim();
+      const currentPassword = (document.getElementById('currentPassword') as HTMLInputElement).value;
+      const newPassword = (document.getElementById('newPassword') as HTMLInputElement).value;
+      const confirmPassword = (document.getElementById('confirmPassword') as HTMLInputElement).value;
+
+      // Validation basique
+      if (!prenom || !nom) {
+        showError('Le prénom et le nom sont obligatoires');
+        return;
+      }
+
+      // Si changement de mot de passe
+      let passwordChanged = false;
+      if (currentPassword || newPassword || confirmPassword) {
+        if (!currentPassword) {
+          showError('Veuillez entrer votre mot de passe actuel');
+          return;
+        }
+
+        if (!newPassword) {
+          showError('Veuillez entrer un nouveau mot de passe');
+          return;
+        }
+
+        if (newPassword.length < 8) {
+          showError('Le nouveau mot de passe doit contenir au moins 8 caractères');
+          return;
+        }
+
+        if (newPassword !== confirmPassword) {
+          showError('Les nouveaux mots de passe ne correspondent pas');
+          return;
+        }
+
+        // Vérifier que le mot de passe actuel est correct
+        try {
+          const verifyResult = await pb.collection('Utilisateur').getList(1, 1, {
+            filter: `id = "${user.id}" && Mot_de_passe = "${currentPassword}"`,
+          });
+
+          if (verifyResult.items.length === 0) {
+            showError('Le mot de passe actuel est incorrect');
+            return;
+          }
+          passwordChanged = true;
+        } catch (error) {
+          showError('Erreur lors de la vérification du mot de passe');
+          return;
+        }
+      }
+
+      // Désactiver le bouton et afficher le loading
+      submitBtn.disabled = true;
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+
+      try {
+        // Préparer les données à mettre à jour
+        const updateData: any = {
+          Prenom: prenom,
+          Nom: nom,
+        };
+
+        // Ajouter le nouveau mot de passe si changé
+        if (passwordChanged) {
+          updateData.Mot_de_passe = newPassword;
+        }
+
+        // Mettre à jour dans PocketBase
+        const updatedRecord = await pb.collection('Utilisateur').update(user.id, updateData);
+
+        // Mettre à jour le localStorage
+        localStorage.setItem('currentUser', JSON.stringify({
+          id: updatedRecord.id,
+          Nom: updatedRecord.Nom,
+          Prenom: updatedRecord.Prenom,
+          Mail: updatedRecord.Mail,
+        }));
+
+        // Afficher le succès
+        showSuccess(passwordChanged ? 
+          'Profil et mot de passe mis à jour avec succès !' : 
+          'Profil mis à jour avec succès !'
+        );
+
+        // Réinitialiser les champs de mot de passe
+        if (passwordChanged) {
+          (document.getElementById('currentPassword') as HTMLInputElement).value = '';
+          (document.getElementById('newPassword') as HTMLInputElement).value = '';
+          (document.getElementById('confirmPassword') as HTMLInputElement).value = '';
+        }
+
+        // Rediriger après 2 secondes
+        setTimeout(() => {
+          window.location.href = '/profil';
+        }, 2000);
+
+      } catch (error: any) {
+        console.error('Erreur lors de la mise à jour:', error);
+        showError('Une erreur est survenue lors de la mise à jour. Veuillez réessayer.');
+      } finally {
+        // Réactiver le bouton
+        submitBtn.disabled = false;
+        btnText.classList.remove('hidden');
+        btnLoading.classList.add('hidden');
+      }
+    });
+  </script>
+</Layout>

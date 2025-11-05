@@ -8,10 +8,10 @@ interface Props {
   isCustom?: boolean;
 }
 
-const { name, category, price, image = "/images/lunettes.png", slug, isCustom = false } = Astro.props;
+const { name, category, price, image = "/lunettes-default.svg", slug, isCustom = false } = Astro.props;
 ---
 
-<a href={isCustom ? '/personnaliser' : `/produit/${slug}`} class="block group">
+<a href={isCustom ? '/personnalisation' : `/produit/${slug}`} class="block group">
   <div class={`card bg-zinc-900 border transition-all duration-300 group-hover:scale-105 ${
     isCustom 
       ? 'border-yellow-500/50 bg-gradient-to-br from-yellow-500/10 to-amber-500/10' 
@@ -25,11 +25,16 @@ const { name, category, price, image = "/images/lunettes.png", slug, isCustom = 
           </span>
         </div>
       )}
-      <img 
-        src={image} 
-        alt={`Modèle ${name}`} 
-        class={`rounded-lg h-48 w-full object-cover ${isCustom ? 'opacity-90' : ''}`}
-      />
+      <div class="rounded-lg h-48 w-full flex items-center justify-center bg-black/30 p-4">
+        <div class="w-full h-full flex items-center justify-center">
+          <img 
+            src={image} 
+            alt={`Modèle ${name}`} 
+            class={`max-w-full max-h-full object-contain ${isCustom ? 'opacity-90' : ''}`}
+            style="width: 100%; height: 100%;"
+          />
+        </div>
+      </div>
       {isCustom && (
         <div class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-lg mx-6 mt-6">
           <svg class="w-16 h-16 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

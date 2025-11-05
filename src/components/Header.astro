@@ -13,7 +13,7 @@
       <!-- Menu desktop -->
       <ul class="hidden md:flex items-center gap-8 text-sm">
         <li>
-          <a href="/personnaliser" class="text-gray-300 hover:text-yellow-500 transition-colors">
+          <a href="/personnalisation" class="text-gray-300 hover:text-yellow-500 transition-colors">
             Personnaliser
           </a>
         </li>
@@ -27,7 +27,26 @@
             À propos
           </a>
         </li>
-        <li>
+        
+        <!-- Menu utilisateur (visible si connecté) -->
+        <li id="userMenu" style="display: none;">
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-sm gap-2 text-gray-300 hover:text-yellow-500">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span id="userName"></span>
+            </label>
+            <ul tabindex="0" class="dropdown-content menu p-2 shadow-lg bg-zinc-900 border border-white/10 rounded-box w-52 mt-4">
+              <li><a href="/profil" class="hover:bg-yellow-500/10">Mon profil</a></li>
+              <li><a href="/compte" class="hover:bg-yellow-500/10">Mes commandes</a></li>
+              <li><a id="logoutBtn" class="text-error hover:bg-red-500/10">Déconnexion</a></li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- Bouton Compte/Connexion (visible si non connecté) -->
+        <li id="accountBtn" style="display: none;">
           <a href="/compte" class="text-gray-300 hover:text-yellow-500 transition-colors">
             Compte
           </a>
@@ -45,3 +64,69 @@
     </div>
   </nav>
 </header>
+
+<script>
+  // Fonction pour mettre à jour le header selon l'état de connexion
+  function updateHeader() {
+    // Vérifier si on est côté client
+    if (typeof window === 'undefined') return;
+    
+    const userStr = localStorage.getItem('currentUser');
+    const userMenu = document.getElementById('userMenu');
+    const accountBtn = document.getElementById('accountBtn');
+    const userName = document.getElementById('userName');
+    
+    if (userStr && userMenu && accountBtn && userName) {
+      try {
+        const user = JSON.parse(userStr);
+        // Utilisateur connecté
+        userMenu.style.display = 'block';
+        accountBtn.style.display = 'none';
+        userName.textContent = user.Prenom || user.Nom || 'Mon compte';
+      } catch (e) {
+        // Erreur de parsing, utilisateur non connecté
+        userMenu.style.display = 'none';
+        accountBtn.style.display = 'block';
+      }
+    } else if (userMenu && accountBtn) {
+      // Utilisateur non connecté
+      userMenu.style.display = 'none';
+      accountBtn.style.display = 'block';
+    }
+  }
+
+  // Gestion de la déconnexion
+  function setupLogout() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        localStorage.removeItem('currentUser');
+        window.location.href = '/';
+      });
+    }
+  }
+
+  // Initialiser au chargement de la page
+  document.addEventListener('DOMContentLoaded', () => {
+    updateHeader();
+    setupLogout();
+  });
+
+  // Mettre à jour aussi immédiatement (pour les navigations Astro)
+  updateHeader();
+  setupLogout();
+
+  // Écouter les changements dans le localStorage (synchronisation entre onglets)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'currentUser') {
+      updateHeader();
+    }
+  });
+
+  // Écouter les événements de navigation Astro
+  document.addEventListener('astro:page-load', () => {
+    updateHeader();
+    setupLogout();
+  });
+</script>

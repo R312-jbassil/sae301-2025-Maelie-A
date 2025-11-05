@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+<Layout title="Mon profil - TaVue">
+  <Header />
+  
+  <main class="min-h-screen pt-20 px-6 lg:px-10">
+    <!-- Message d'alerte si non connecté -->
+    <div id="not-logged-in" class="hidden">
+      <div class="container mx-auto py-20 text-center">
+        <h1 class="text-4xl font-light text-yellow-500 mb-4">Accès refusé</h1>
+        <p class="text-gray-300 mb-8">Vous devez être connecté pour accéder à cette page.</p>
+        <a href="/compte" class="btn btn-warning bg-yellow-500 hover:bg-yellow-400 text-black border-none">
+          Se connecter
+        </a>
+      </div>
+    </div>
+
+    <!-- Contenu du profil -->
+    <div id="profile-content" class="hidden">
+      <div class="container mx-auto py-20">
+        <h1 class="text-4xl font-light text-yellow-500 mb-8 text-center">
+          Mon profil
+        </h1>
+
+        <div class="max-w-3xl mx-auto bg-zinc-900/50 border border-white/10 rounded-2xl p-8 space-y-6">
+          <!-- Informations utilisateur -->
+          <div>
+            <h2 class="text-2xl font-medium text-yellow-500 mb-4">
+              Informations personnelles
+            </h2>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <label class="text-sm text-gray-300 uppercase tracking-wide">
+                  Prénom
+                </label>
+                <p id="user-prenom" class="text-lg text-white">
+                  <!-- Prénom de l'utilisateur -->
+                </p>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm text-gray-300 uppercase tracking-wide">
+                  Nom
+                </label>
+                <p id="user-nom" class="text-lg text-white">
+                  <!-- Nom de l'utilisateur -->
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="text-2xl font-medium text-yellow-500 mb-4">
+              Informations de connexion
+            </h2>
+            <div class="space-y-2">
+              <label class="text-sm text-gray-300 uppercase tracking-wide">
+                Adresse Email
+              </label>
+              <p id="user-email" class="text-lg text-white">
+                <!-- Email de l'utilisateur -->
+              </p>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a 
+              href="/panier" 
+              class="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black font-medium py-3 rounded-lg transition-colors uppercase tracking-wide text-center flex items-center justify-center gap-2"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+              Mon panier
+            </a>
+            <a 
+              href="/modifier-profil" 
+              class="flex-1 border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-medium py-3 rounded-lg transition-colors uppercase tracking-wide text-center"
+            >
+              Modifier le profil
+            </a>
+            <button 
+              id="btn-logout"
+              class="flex-1 bg-red-500 hover:bg-red-400 text-white font-medium py-3 rounded-lg transition-colors uppercase tracking-wide"
+            >
+              Se déconnecter
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 lg:px-10">
+    <div class="container mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <nav class="flex gap-6 text-sm text-gray-400">
+          <a href="/mentions-legales" class="hover:text-yellow-500 transition-colors">Mentions légales</a>
+          <span class="text-white/20">|</span>
+          <a href="/cgv" class="hover:text-yellow-500 transition-colors">CGV</a>
+          <span class="text-white/20">|</span>
+          <a href="/contact" class="hover:text-yellow-500 transition-colors">Contact</a>
+        </nav>
+        <p class="text-yellow-500 font-serif text-sm">
+          Fabrication française – Artisanat d'excellence
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    import { getCurrentUser, logout } from '../lib/pocketbase';
+
+    // Vérifier si l'utilisateur est connecté
+    const user = getCurrentUser();
+
+    if (!user) {
+      console.log('Utilisateur non connecté');
+      document.getElementById('not-logged-in')?.classList.remove('hidden');
+    } else {
+      console.log('Utilisateur connecté:', user);
+      // Afficher le profil
+      document.getElementById('profile-content')?.classList.remove('hidden');
+      
+      // Remplir les informations utilisateur
+      const prenomEl = document.getElementById('user-prenom');
+      const nomEl = document.getElementById('user-nom');
+      const emailEl = document.getElementById('user-email');
+
+      if (prenomEl) prenomEl.textContent = user.Prenom || '-';
+      if (nomEl) nomEl.textContent = user.Nom || '-';
+      if (emailEl) emailEl.textContent = user.Mail || '-';
+    }
+
+    // Bouton de déconnexion
+    const btnLogout = document.getElementById('btn-logout');
+    btnLogout?.addEventListener('click', () => {
+      console.log('Déconnexion');
+      logout();
+      window.location.href = '/';
+    });
+  </script>
+</Layout>

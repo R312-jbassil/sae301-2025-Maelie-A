@@ -1,0 +1,573 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+---
+
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<style>
+  /* Slider styling */
+  input[type="range"].slider {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  input[type="range"].slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #FFD700;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  
+  input[type="range"].slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #FFD700;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  
+  input[type="range"].slider::-webkit-slider-runnable-track {
+    background: #27272a;
+    height: 8px;
+    border-radius: 4px;
+  }
+  
+  input[type="range"].slider::-moz-range-track {
+    background: #27272a;
+    height: 8px;
+    border-radius: 4px;
+  }
+</style>
+
+<Layout title="Personnalisation - TaVue">
+  <Header />
+  
+  <main class="min-h-screen pt-20 px-6 lg:px-10 bg-black">
+    
+    <!-- Hero Section -->
+          <div class="container mx-auto">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <span class="px-4 py-1 bg-yellow-500 text-black text-sm font-bold rounded">CRÉATION UNIQUE</span>
+            <h1 class="text-4xl lg:text-5xl font-light text-white mt-4">
+              Créez vos lunettes <span class="text-yellow-500 font-serif italic">sur mesure</span>
+            </h1>
+            <p class="text-gray-400 mt-2">Exprimez votre vision, façonnez votre style</p>
+          </div>
+          <div class="text-right text-sm text-gray-500">
+            Dim. 1 novembre 2025
+          </div>
+        </div>
+
+      <!-- Configurateur -->
+      <div class="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+        
+        <!-- Visualisation -->
+        <div class="order-2 lg:order-1">
+          <div class="bg-zinc-900 rounded-2xl p-6 relative">
+            
+            <!-- Badges -->
+            <div class="flex gap-4 mb-6">
+              <div class="flex items-center gap-2 text-yellow-500 text-sm">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                </svg>
+                <span>Made in Paris</span>
+              </div>
+              <div class="flex items-center gap-2 text-yellow-500 text-sm">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span>Garantie à vie</span>
+              </div>
+            </div>
+
+            <!-- Zone de visualisation -->
+            <div class="aspect-square bg-black rounded-lg flex items-center justify-center mb-6 relative overflow-hidden">
+              <div id="glassesPreview" class="w-full h-full flex items-center justify-center p-8">
+                <svg id="glassesSVG" class="w-full h-auto max-w-md transition-all duration-300" viewBox="0 0 200 100">
+                  <text x="100" y="50" text-anchor="middle" fill="#6b7280" font-size="10">
+                    Sélectionnez un modèle
+                  </text>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Bouton "Votre création" -->
+            <button class="w-full flex items-center justify-between px-4 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors">
+              <span class="text-white text-sm">✨ Votre création</span>
+              <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Options de personnalisation -->
+        <div class="order-1 lg:order-2 space-y-6">
+          
+          <!-- Matériau -->
+          <div>
+            <h2 class="text-xs uppercase tracking-wider text-yellow-500 mb-3">Matériau</h2>
+            <p class="text-sm text-gray-400 mb-4">Sélectionnez le matériau de votre monture</p>
+            
+            <div id="materialsContainer" class="grid grid-cols-2 gap-3">
+              <!-- Les matériaux seront chargés ici -->
+              <button class="material-btn p-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-yellow-500 rounded-lg text-left transition-all">
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="w-6 h-6 rounded-full bg-yellow-500/20 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
+                    </svg>
+                  </div>
+                  <span class="text-white font-medium text-sm">Acétate</span>
+                </div>
+                <p class="text-xs text-gray-500">Léger et durable</p>
+              </button>
+            </div>
+          </div>
+
+          <!-- Couleur de la monture -->
+          <div>
+            <h2 class="text-xs uppercase tracking-wider text-yellow-500 mb-3">Couleur de la monture</h2>
+            <p class="text-sm text-gray-400 mb-4">Choisissez la couleur principale</p>
+            
+            <div class="flex gap-3" id="swatches-monture">
+              <!-- Les couleurs seront injectées ici -->
+            </div>
+          </div>
+
+          <!-- Couleur des branches -->
+          <div>
+            <h2 class="text-xs uppercase tracking-wider text-yellow-500 mb-3">Couleur des branches</h2>
+            <p class="text-sm text-gray-400 mb-4">Personnalisez les branches</p>
+            
+            <div class="flex gap-3" id="swatches-branches">
+              <!-- Les couleurs seront injectées ici -->
+            </div>
+          </div>
+
+          <!-- Couleur des verres -->
+          <div>
+            <h2 class="text-xs uppercase tracking-wider text-yellow-500 mb-3">Couleur des verres</h2>
+            <p class="text-sm text-gray-400 mb-4">Personnalisez les verres</p>
+            
+            <div class="flex gap-3" id="swatches-verres">
+              <!-- Les couleurs seront injectées ici -->
+            </div>
+          </div>
+
+          <!-- Taille des verres -->
+          <div>
+            <h2 class="text-xs uppercase tracking-wider text-yellow-500 mb-3">Taille des verres</h2>
+            <p class="text-sm text-gray-400 mb-4">Ajuster la dimension</p>
+            
+            <div class="flex items-center gap-4">
+              <input 
+                type="range" 
+                id="lensSize"
+                min="40" 
+                max="60" 
+                value="50" 
+                class="flex-1 h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer slider"
+              />
+              <div class="px-4 py-2 bg-yellow-500 text-black font-bold rounded text-sm min-w-[70px] text-center">
+                <span id="lensSizeValue">50</span> mm
+              </div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500 mt-2">
+              <span>40</span>
+              <span>60</span>
+            </div>
+          </div>
+
+          <!-- Largeur du pont -->
+          <div>
+            <h2 class="text-xs uppercase tracking-wider text-yellow-500 mb-3">Largeur du pont</h2>
+            <p class="text-sm text-gray-400 mb-4">Confort d'ajustement</p>
+            
+            <div class="flex items-center gap-4">
+              <input 
+                type="range" 
+                id="bridgeWidth"
+                min="14" 
+                max="22" 
+                value="18" 
+                class="flex-1 h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer slider"
+              />
+              <div class="px-4 py-2 bg-yellow-500 text-black font-bold rounded text-sm min-w-[70px] text-center">
+                <span id="bridgeWidthValue">18</span> mm
+              </div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500 mt-2">
+              <span>14</span>
+              <span>22</span>
+            </div>
+          </div>
+
+          <!-- Prix et actions -->
+          <div class="pt-6 border-t border-zinc-800">
+            <div class="mb-6">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-xs uppercase text-gray-500">Prix total</span>
+                <span id="selectedModel" class="text-xs text-gray-400"></span>
+              </div>
+              <div class="flex justify-between items-baseline">
+                <span id="totalPrice" class="text-4xl font-bold text-yellow-500">289 €</span>
+                <div class="text-right">
+                  <p class="text-xs text-gray-500">Livraison</p>
+                  <p class="text-sm text-white">2-3 semaines</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Boutons -->
+            <div class="space-y-3">
+              <button 
+                id="addToCartBtn"
+                class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                COMMANDER
+              </button>
+              
+              <button class="w-full border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500/10 font-bold py-4 rounded-lg transition-colors flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/>
+                </svg>
+                ENREGISTRER
+              </button>
+            </div>
+
+            <p class="text-xs text-gray-500 text-center mt-4">
+              Modifications appliquées instantanément
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-12 px-6 lg:px-10">
+    <div class="container mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <nav class="flex gap-6 text-sm text-gray-400">
+          <a href="/mentions-legales" class="hover:text-yellow-500 transition-colors">Mentions légales</a>
+          <span class="text-white/20">|</span>
+          <a href="/cgv" class="hover:text-yellow-500 transition-colors">CGV</a>
+          <span class="text-white/20">|</span>
+          <a href="/contact" class="hover:text-yellow-500 transition-colors">Contact</a>
+        </nav>
+        <p class="text-yellow-500 font-serif text-sm">
+          Fabrication française – Artisanat d'excellence
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    import { pb, getCurrentUser, isLoggedIn } from '../lib/pocketbase';
+
+    // Palette de couleurs disponibles
+    const colors = [
+      { name: 'Jaune', hex: '#FFD700' },
+      { name: 'Marron', hex: '#8B4513' },
+      { name: 'Gris', hex: '#808080' },
+      { name: 'Blanc', hex: '#FFFFFF' },
+      { name: 'Rouge', hex: '#DC2626' },
+      { name: 'Transparent', hex: 'transparent' }
+    ];
+
+    // Matériaux disponibles
+    const materials = [
+      { name: 'Acétate', description: 'Léger et durable', icon: 'M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z' },
+      { name: 'Métal', description: 'Élégant et fin', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
+      { name: 'Titane', description: 'Ultra léger', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+      { name: 'Carbone', description: 'Performance', icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z' }
+    ];
+
+    let selectedModel: any = null;
+    let selectedColors = {
+      monture: '#FFD700',
+      branches: '#FFD700', 
+      verres: 'transparent'
+    };
+    let selectedMaterial = 'Acétate';
+
+    // Charger les modèles de lunettes
+    async function loadModels() {
+      try {
+        const models = await pb.collection('Lunette').getFullList({
+          sort: '-created',
+        });
+        
+        if (models.length === 0) {
+          document.getElementById('materialsContainer')!.innerHTML = `
+            <p class="col-span-2 text-center text-gray-500 py-4">Aucun modèle disponible</p>
+          `;
+          return;
+        }
+
+        // Sélectionner le premier modèle par défaut
+        selectModel(models[0]);
+        renderMaterials();
+        renderColorSwatches();
+        
+      } catch (error) {
+        console.error('Erreur lors du chargement des modèles:', error);
+        document.getElementById('materialsContainer')!.innerHTML = `
+          <p class="col-span-2 text-center text-red-500 py-4">Erreur de chargement</p>
+        `;
+      }
+    }
+
+    function renderMaterials() {
+      const container = document.getElementById('materialsContainer')!;
+      container.innerHTML = materials.map((mat, idx) => `
+        <button 
+          onclick="window.selectMaterial('${mat.name}')"
+          class="material-btn p-4 bg-zinc-900 hover:bg-zinc-800 border ${idx === 0 ? 'border-yellow-500' : 'border-zinc-800'} hover:border-yellow-500 rounded-lg text-left transition-all"
+          data-material="${mat.name}"
+        >
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-6 h-6 rounded-full bg-yellow-500/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                <path d="${mat.icon}"/>
+              </svg>
+            </div>
+            <span class="text-white font-medium text-sm">${mat.name}</span>
+          </div>
+          <p class="text-xs text-gray-500">${mat.description}</p>
+        </button>
+      `).join('');
+    }
+
+    function renderColorSwatches() {
+      // Monture
+      const montureContainer = document.getElementById('swatches-monture')!;
+      montureContainer.innerHTML = colors.map((color, idx) => `
+        <button
+          onclick="window.selectColor('monture', '${color.hex}')"
+          class="color-swatch w-10 h-10 rounded-full border-2 ${idx === 0 ? 'border-white ring-2 ring-yellow-500' : 'border-zinc-700'} hover:border-white transition-all"
+          style="background-color: ${color.hex}; ${color.hex === 'transparent' ? 'background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc); background-size: 8px 8px; background-position: 0 0, 4px 4px;' : ''}"
+          data-part="monture"
+          data-color="${color.hex}"
+          title="${color.name}"
+        ></button>
+      `).join('');
+
+      // Branches
+      const branchesContainer = document.getElementById('swatches-branches')!;
+      branchesContainer.innerHTML = colors.map((color, idx) => `
+        <button
+          onclick="window.selectColor('branches', '${color.hex}')"
+          class="color-swatch w-10 h-10 rounded-full border-2 ${idx === 0 ? 'border-white ring-2 ring-yellow-500' : 'border-zinc-700'} hover:border-white transition-all"
+          style="background-color: ${color.hex}; ${color.hex === 'transparent' ? 'background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc); background-size: 8px 8px; background-position: 0 0, 4px 4px;' : ''}"
+          data-part="branches"
+          data-color="${color.hex}"
+          title="${color.name}"
+        ></button>
+      `).join('');
+
+      // Verres
+      const verresContainer = document.getElementById('swatches-verres')!;
+      verresContainer.innerHTML = colors.map((color, idx) => `
+        <button
+          onclick="window.selectColor('verres', '${color.hex}')"
+          class="color-swatch w-10 h-10 rounded-full border-2 ${color.hex === 'transparent' ? 'border-white ring-2 ring-yellow-500' : 'border-zinc-700'} hover:border-white transition-all"
+          style="background-color: ${color.hex}; ${color.hex === 'transparent' ? 'background-image: linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc), linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc); background-size: 8px 8px; background-position: 0 0, 4px 4px;' : ''}"
+          data-part="verres"
+          data-color="${color.hex}"
+          title="${color.name}"
+        ></button>
+      `).join('');
+    }
+
+    function selectModel(model: any) {
+      selectedModel = model;
+      
+      // Mettre à jour le nom du modèle
+      const modelNameElement = document.getElementById('selectedModel');
+      if (modelNameElement) {
+        modelNameElement.textContent = model.Nom;
+      }
+      
+      // Mettre à jour le prix
+      const priceElement = document.getElementById('totalPrice');
+      if (priceElement) {
+        priceElement.textContent = `${model.Prix_de_base} €`;
+      }
+      
+      updatePreview();
+    }
+
+    (window as any).selectMaterial = function(materialName: string) {
+      selectedMaterial = materialName;
+      
+      // Mettre à jour les styles des boutons de matériau
+      document.querySelectorAll('.material-btn').forEach(btn => {
+        const btnElement = btn as HTMLElement;
+        if (btnElement.dataset.material === materialName) {
+          btnElement.classList.remove('border-zinc-800');
+          btnElement.classList.add('border-yellow-500');
+        } else {
+          btnElement.classList.remove('border-yellow-500');
+          btnElement.classList.add('border-zinc-800');
+        }
+      });
+    };
+
+    (window as any).selectColor = function(part: 'monture' | 'branches' | 'verres', color: string) {
+      selectedColors[part] = color;
+      
+      // Mettre à jour les styles des swatches
+      document.querySelectorAll(`[data-part="${part}"]`).forEach(swatch => {
+        const swatchElement = swatch as HTMLElement;
+        if (swatchElement.dataset.color === color) {
+          swatchElement.classList.remove('border-zinc-700');
+          swatchElement.classList.add('border-white', 'ring-2', 'ring-yellow-500');
+        } else {
+          swatchElement.classList.remove('border-white', 'ring-2', 'ring-yellow-500');
+          swatchElement.classList.add('border-zinc-700');
+        }
+      });
+      
+      updatePreview();
+    };
+
+    function updatePreview() {
+      if (!selectedModel) return;
+
+      const previewContainer = document.getElementById('glassesPreview');
+      if (!previewContainer) return;
+
+      // Charger le SVG par défaut et appliquer les couleurs
+      fetch('/lunettes-default.svg')
+        .then(res => res.text())
+        .then(svgText => {
+          // Parser le SVG
+          const parser = new DOMParser();
+          const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+          const svgElement = svgDoc.querySelector('svg');
+          
+          if (svgElement) {
+            // Le viewBox est déjà optimisé dans le fichier SVG
+            svgElement.setAttribute('width', '100%');
+            svgElement.setAttribute('height', '100%');
+            
+            // Appliquer les couleurs aux parties
+            const branches = svgElement.querySelector('#branches');
+            if (branches) {
+              branches.querySelectorAll('path').forEach((path: any) => {
+                path.style.fill = selectedColors.branches;
+                path.style.stroke = selectedColors.branches;
+              });
+            }
+            
+            const monture = svgElement.querySelector('#monture');
+            if (monture) {
+              monture.querySelectorAll('path').forEach((path: any) => {
+                path.style.fill = selectedColors.monture;
+                path.style.stroke = selectedColors.monture;
+              });
+            }
+            
+            const verres = svgElement.querySelector('#verres');
+            if (verres) {
+              verres.querySelectorAll('path').forEach((path: any) => {
+                if (selectedColors.verres === 'transparent') {
+                  path.style.fill = 'rgba(255, 255, 255, 0.1)';
+                  path.style.opacity = '0.3';
+                } else {
+                  path.style.fill = selectedColors.verres;
+                  path.style.opacity = '0.5';
+                }
+              });
+            }
+            
+            // Injecter le SVG modifié
+            previewContainer.innerHTML = svgElement.outerHTML;
+          }
+        })
+        .catch(err => {
+          console.error('Erreur lors du chargement du SVG:', err);
+          previewContainer.innerHTML = `<p class="text-red-500 text-center">Erreur de chargement</p>`;
+        });
+    }
+
+    function addToCart() {
+      if (!selectedModel) {
+        alert('Veuillez sélectionner un modèle');
+        return;
+      }
+
+      // Vérifier si l'utilisateur est connecté
+      if (!isLoggedIn()) {
+        alert('Veuillez vous connecter pour ajouter au panier');
+        window.location.href = '/compte';
+        return;
+      }
+
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      
+      const item = {
+        modelId: selectedModel.id,
+        modelName: selectedModel.Nom,
+        colors: {...selectedColors},
+        material: selectedMaterial,
+        price: selectedModel.Prix_de_base,
+        date: new Date().toISOString()
+      };
+      
+      cart.push(item);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      
+      alert('✓ Lunettes ajoutées au panier !');
+      window.location.href = '/panier';
+    }
+
+    // Gestion des sliders
+    function setupSliders() {
+      const lensSize = document.getElementById('lensSize') as HTMLInputElement;
+      const lensSizeValue = document.getElementById('lensSizeValue');
+      
+      const bridgeWidth = document.getElementById('bridgeWidth') as HTMLInputElement;
+      const bridgeWidthValue = document.getElementById('bridgeWidthValue');
+
+      if (lensSize && lensSizeValue) {
+        lensSize.addEventListener('input', () => {
+          lensSizeValue.textContent = lensSize.value;
+        });
+      }
+
+      if (bridgeWidth && bridgeWidthValue) {
+        bridgeWidth.addEventListener('input', () => {
+          bridgeWidthValue.textContent = bridgeWidth.value;
+        });
+      }
+    }
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', () => {
+      loadModels();
+      setupSliders();
+      
+      const addToCartBtn = document.getElementById('addToCartBtn');
+      if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', addToCart);
+      }
+    });
+  </script>
+</Layout>
