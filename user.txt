@@ -1,0 +1,7 @@
+mdp pocketbase : 
+-login : maelie.addario@edu.univ-fcomte.fr
+-mdp : Ppbbmad222306! 
+
+utilisateur test :
+-login : test@test.com
+-mdp : 1234567!
