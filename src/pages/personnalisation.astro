@@ -3,10 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 ---
 
----
-import Layout from '../layouts/Layout.astro';
----
-
 <style>
   /* Slider styling */
   input[type="range"].slider {
@@ -311,7 +307,12 @@ import Layout from '../layouts/Layout.astro';
       { name: 'Carbone', description: 'Performance', icon: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z' }
     ];
 
-    let selectedModel: any = null;
+    let selectedModel: any = {
+      id: 'default',
+      Nom: 'Lunettes Classiques',
+      Prix_de_base: 289,
+      Materiau: 'Acétate'
+    };
     let selectedColors = {
       monture: '#FFD700',
       branches: '#FFD700', 
@@ -319,30 +320,20 @@ import Layout from '../layouts/Layout.astro';
     };
     let selectedMaterial = 'Acétate';
 
-    // Charger les modèles de lunettes
+    // Charger les modèles de lunettes depuis PocketBase (optionnel)
     async function loadModels() {
       try {
-        const models = await pb.collection('Lunette').getFullList({
+        const models = await pb.collection('Materiau').getFullList({
           sort: '-created',
         });
         
-        if (models.length === 0) {
-          document.getElementById('materialsContainer')!.innerHTML = `
-            <p class="col-span-2 text-center text-gray-500 py-4">Aucun modèle disponible</p>
-          `;
-          return;
+        if (models.length > 0) {
+          // Si des modèles existent, prendre le premier
+          selectModel(models[0]);
         }
-
-        // Sélectionner le premier modèle par défaut
-        selectModel(models[0]);
-        renderMaterials();
-        renderColorSwatches();
-        
       } catch (error) {
-        console.error('Erreur lors du chargement des modèles:', error);
-        document.getElementById('materialsContainer')!.innerHTML = `
-          <p class="col-span-2 text-center text-red-500 py-4">Erreur de chargement</p>
-        `;
+        console.log('Utilisation du modèle par défaut');
+        // Garder le modèle par défaut déjà initialisé
       }
     }
 
@@ -461,8 +452,6 @@ import Layout from '../layouts/Layout.astro';
     };
 
     function updatePreview() {
-      if (!selectedModel) return;
-
       const previewContainer = document.getElementById('glassesPreview');
       if (!previewContainer) return;
 
@@ -622,6 +611,12 @@ import Layout from '../layouts/Layout.astro';
 
     // Initialisation
     document.addEventListener('DOMContentLoaded', () => {
+      // Initialiser l'affichage immédiatement
+      renderMaterials();
+      renderColorSwatches();
+      updatePreview();
+      
+      // Charger les modèles depuis PocketBase si disponible
       loadModels();
       setupSliders();
       
